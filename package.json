@@ -10,6 +10,8 @@
   "dependencies": {
     "core-js": "^2.6.5",
     "vue": "^2.6.10",
+    "vue-pressure": "^2.1.0",
+    "vue-recognizer": "^1.0.0",
     "vuex": "^3.0.1"
   },
   "devDependencies": {
@@ -33,7 +35,9 @@
       "plugin:vue/essential",
       "@vue/standard"
     ],
-    "rules": {},
+    "rules": {
+      "brace-style": [2, "stroustrup", { "allowSingleLine": true }]
+    },
     "parserOptions": {
       "parser": "babel-eslint"
     }
