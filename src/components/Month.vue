@@ -57,18 +57,18 @@ export default {
     }
   },
   beforeMount () {
-    this.months.push({ label: 'Jan.', number: 1, id: 'month_1'})
-    this.months.push({ label: 'Feb.', number: 2, id: 'month_2'})
-    this.months.push({ label: 'Mar.', number: 3, id: 'month_3'})
-    this.months.push({ label: 'Apr.', number: 4, id: 'month_4'})
-    this.months.push({ label: 'May', number: 5, id: 'month_5'})
-    this.months.push({ label: 'June', number: 6, id: 'month_6'})
-    this.months.push({ label: 'July', number: 7, id: 'month_7'})
-    this.months.push({ label: 'Aug.', number: 8, id: 'month_8'})
-    this.months.push({ label: 'Sep.', number: 9, id: 'month_9'})
-    this.months.push({ label: 'Oct.', number: 10, id: 'month_10'})
-    this.months.push({ label: 'Nov.', number: 11, id: 'month_11'})
-    this.months.push({ label: 'Dec.', number: 12, id: 'month_12'})
+    this.months.push({ label: 'Jan.', number: 0, id: 'month_0'})
+    this.months.push({ label: 'Feb.', number: 1, id: 'month_1'})
+    this.months.push({ label: 'Mar.', number: 2, id: 'month_2'})
+    this.months.push({ label: 'Apr.', number: 3, id: 'month_3'})
+    this.months.push({ label: 'May', number: 4, id: 'month_4'})
+    this.months.push({ label: 'June', number: 5, id: 'month_5'})
+    this.months.push({ label: 'July', number: 6, id: 'month_6'})
+    this.months.push({ label: 'Aug.', number: 7, id: 'month_7'})
+    this.months.push({ label: 'Sep.', number: 8, id: 'month_8'})
+    this.months.push({ label: 'Oct.', number: 9, id: 'month_9'})
+    this.months.push({ label: 'Nov.', number: 10, id: 'month_10'})
+    this.months.push({ label: 'Dec.', number: 11, id: 'month_11'})
   }
 }
 </script>
@@ -83,10 +83,11 @@ export default {
     grid-template-rows: repeat(2, 1fr);
 
     grid-template-areas:
-    'mo01 mo02 mo03 mo04 mo05 mo06'
-    'mo07 mo08 mo09 mo10 mo11 mo12';
+    'mo00 mo01 mo02 mo03 mo04 mo05'
+    'mo06 mo07 mo08 mo09 mo10 mo11';
   }
 
+  #month_0 { grid-area: mo00 }
   #month_1 { grid-area: mo01 }
   #month_2 { grid-area: mo02 }
   #month_3 { grid-area: mo03 }
@@ -98,5 +99,4 @@ export default {
   #month_9 { grid-area: mo09 }
   #month_10 { grid-area: mo10 }
   #month_11 { grid-area: mo11 }
-  #month_12 { grid-area: mo12 }
 </style>

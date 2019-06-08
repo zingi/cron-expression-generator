@@ -29,7 +29,7 @@ export default new Vuex.Store({
           state.dayOfMonth.push(false)
         }
         state.minute.push(false)
-      }
+      }      
     },
     setMinute (state, payload) {
       Vue.set(state.minute, payload.minute, payload.active)
@@ -58,7 +58,7 @@ export default new Vuex.Store({
       return ceh.calcDayOfMonthExpression(state.dayOfMonth)
     },
     monthExpression: state => {
-      return ceh.calcMontExpression(state.month)
+      return ceh.calcMonthExpression(state.month)
     },
     dayOfWeekExpression: state => {
       return ceh.calcDayOfWeekExpression(state.dayOfWeek)

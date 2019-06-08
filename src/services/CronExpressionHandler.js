@@ -169,11 +169,15 @@ export default class CronExpressionHandler {
   }
 
   calcDayOfMonthExpression (arr) {
-    return this.calcExpression(arr.unshift(false), 1, 31)
+    let arrClone = [...arr]
+    arrClone.unshift(false);
+    return this.calcExpression(arrClone, 1, 31)
   }
 
-  calcMontExpression (arr) {
-    return this.calcExpression(arr.unshift(false), 1, 12)
+  calcMonthExpression (arr) {
+    let arrClone = [...arr]
+    arrClone.unshift(false);
+    return this.calcExpression(arrClone, 1, 12)
   }
 
   calcDayOfWeekExpression (arr) {

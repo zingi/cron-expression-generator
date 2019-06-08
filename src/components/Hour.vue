@@ -47,7 +47,7 @@ export default {
       this.checking = null
     },
     hourToggled (hour, active) {
-      this.pushMinuteStateToStore(minute, active)
+      this.pushHourStateToStore(hour, active)
     },
     pushHourStateToStore(hour, active) {
       this.$store.commit('setHour', {

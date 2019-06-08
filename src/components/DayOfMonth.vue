@@ -61,8 +61,8 @@ export default {
       let d = i + 1
       this.days.push({
         label: d < 10 ? '0' + d : '' + d,
-        number: d,
-        id: 'dayOfMonth_' + d
+        number: i,
+        id: 'dayOfMonth_' + i
       })
     }
   }
@@ -85,37 +85,37 @@ export default {
     'dm31 .    .    .    .    .    .    .    .    .   ';
   }
 
-  #dayOfMonth_1 { grid-area: dm01 }
-  #dayOfMonth_2 { grid-area: dm02 }
-  #dayOfMonth_3 { grid-area: dm03 }
-  #dayOfMonth_4 { grid-area: dm04 }
-  #dayOfMonth_5 { grid-area: dm05 }
-  #dayOfMonth_6 { grid-area: dm06 }
-  #dayOfMonth_7 { grid-area: dm07 }
-  #dayOfMonth_8 { grid-area: dm08 }
-  #dayOfMonth_9 { grid-area: dm09 }
-  #dayOfMonth_10 { grid-area: dm10 }
-  #dayOfMonth_11 { grid-area: dm11 }
-  #dayOfMonth_12 { grid-area: dm12 }
-  #dayOfMonth_13 { grid-area: dm13 }
-  #dayOfMonth_14 { grid-area: dm14 }
-  #dayOfMonth_15 { grid-area: dm15 }
-  #dayOfMonth_16 { grid-area: dm16 }
-  #dayOfMonth_17 { grid-area: dm17 }
-  #dayOfMonth_18 { grid-area: dm18 }
-  #dayOfMonth_19 { grid-area: dm19 }
-  #dayOfMonth_20 { grid-area: dm20 }
-  #dayOfMonth_21 { grid-area: dm21 }
-  #dayOfMonth_22 { grid-area: dm22 }
-  #dayOfMonth_23 { grid-area: dm23 }
-  #dayOfMonth_24 { grid-area: dm24 }
-  #dayOfMonth_25 { grid-area: dm25 }
-  #dayOfMonth_26 { grid-area: dm26 }
-  #dayOfMonth_27 { grid-area: dm27 }
-  #dayOfMonth_28 { grid-area: dm28 }
-  #dayOfMonth_29 { grid-area: dm29 }
-  #dayOfMonth_30 { grid-area: dm30 }
-  #dayOfMonth_31 { grid-area: dm31 }
+  #dayOfMonth_0 { grid-area: dm01 }
+  #dayOfMonth_1 { grid-area: dm02 }
+  #dayOfMonth_2 { grid-area: dm03 }
+  #dayOfMonth_3 { grid-area: dm04 }
+  #dayOfMonth_4 { grid-area: dm05 }
+  #dayOfMonth_5 { grid-area: dm06 }
+  #dayOfMonth_6 { grid-area: dm07 }
+  #dayOfMonth_7 { grid-area: dm08 }
+  #dayOfMonth_8 { grid-area: dm09 }
+  #dayOfMonth_9 { grid-area: dm10 }
+  #dayOfMonth_10 { grid-area: dm11 }
+  #dayOfMonth_11 { grid-area: dm12 }
+  #dayOfMonth_12 { grid-area: dm13 }
+  #dayOfMonth_13 { grid-area: dm14 }
+  #dayOfMonth_14 { grid-area: dm15 }
+  #dayOfMonth_15 { grid-area: dm16 }
+  #dayOfMonth_16 { grid-area: dm17 }
+  #dayOfMonth_17 { grid-area: dm18 }
+  #dayOfMonth_18 { grid-area: dm19 }
+  #dayOfMonth_19 { grid-area: dm20 }
+  #dayOfMonth_20 { grid-area: dm21 }
+  #dayOfMonth_21 { grid-area: dm22 }
+  #dayOfMonth_22 { grid-area: dm23 }
+  #dayOfMonth_23 { grid-area: dm24 }
+  #dayOfMonth_24 { grid-area: dm25 }
+  #dayOfMonth_25 { grid-area: dm26 }
+  #dayOfMonth_26 { grid-area: dm27 }
+  #dayOfMonth_27 { grid-area: dm28 }
+  #dayOfMonth_28 { grid-area: dm29 }
+  #dayOfMonth_29 { grid-area: dm30 }
+  #dayOfMonth_30 { grid-area: dm31 }
 </style>
 
 
