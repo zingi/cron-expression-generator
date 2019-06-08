@@ -78,6 +78,7 @@ export default {
     display: flex;
     flex-direction: column;
     overflow: auto;
+    box-sizing: border-box;
 
     border-radius: 15px;
     padding: 15px;

@@ -66,17 +66,126 @@ export default {
 #dayOfWeekContainer { grid-area: dwc }
 #cronExpressionGridItem { grid-area: cex }
 
-// @media (min-width: 1280px) {
-// }
+@media (min-width: 1280px) {
+  .container {
+    padding: 5px 30px 30px 30px;
+  }
+}
+
+@media (min-width: 834px) and (max-width: 1280px) {
+  #app {
+    grid-template-columns: minmax(0, 1fr) 400px 400px minmax(0, 1fr);
+    grid-template-rows: 40px 300px 300px 300px minmax(0, 1fr);
+
+    grid-template-areas:
+    '.  tit tit  .'
+    '.  hoc mic  .'
+    '.  dwc dmc  .'
+    '.  moc cex  .';
+  }
+
+  .container {
+    padding: 5px 30px 30px 30px;
+  }
+  .inputHeader {
+    padding: 0.5em 0 0.5em 0;
+  }
+}
+
+@media (min-width: 600px) and (max-width: 833px) {
+  #app {
+    grid-template-columns: 5px 1fr 1fr 5px;
+    grid-template-rows: 40px 260px 260px 260px minmax(0, 1fr);
+
+    grid-template-areas:
+    '. tit tit .'
+    '. hoc mic .'
+    '. dwc dmc .'
+    '. moc cex .';
+  }
+
+  .container { 
+    padding: 5px 5px 5px 5px;
+  }
+
+  #minuteContainer { 
+    height: 200px;
+  }
+  #hourContainer { 
+    height: 200px;
+  }
+  #dayOfMonthContainer {
+    height: 200px;
+  }
+  #monthContainer { 
+    height: 200px;
+  }
+  #dayOfWeekContainer { 
+    height: 200px;
+  }
+  #cronExpressionGridItem { 
+    height: 200px;
+  }
+  .inputHeader {
+    padding: 0 0 0.5em 0;
+  }
+}
+
+@media (max-width: 599px) {
+  #app {
+    grid-column-gap: 0;
+    grid-row-gap: 5px;
+    grid-template-columns: 0.02fr 1fr 0.02fr;
+    grid-template-rows: 30px 260px 260px 260px 260px 260px 260px;
+
+    grid-template-areas:
+    'tit tit tit'
+    '.   hoc .  '
+    '.   mic .  '
+    '.   dwc .  '
+    '.   dmc .  '
+    '.   moc .  '
+    '.   cex .  ';
+  }
+
+  .container { 
+    padding: 5px 5px 5px 5px;
+  }
+
+  #hourContainer { 
+    height: 200px;
+  }
+  #minuteContainer { 
+    height: 200px;
+  }
+  #dayOfWeekContainer { 
+    height: 200px;
+  }
+  #dayOfMonthContainer {
+    height: 200px;
+  }
+  #monthContainer { 
+    height: 200px;
+  }
+  #cronExpressionGridItem { 
+    height: 200px;
+  }
+  .inputHeader {
+    padding: 0 0 0.5em 0;
+  }
+  h1 { 
+    font-size: 1.5em;
+  }
+}
 
 .container {
   display: flex;
   flex-direction: column;
   align-items: stretch;
+  box-sizing: border-box;
 
   background: white;
   border-radius: 5px;
-  padding: 5px 30px 30px 30px;
   box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
 }
 
@@ -97,7 +206,6 @@ export default {
 .inputHeader {
   display: flex;
   justify-content: space-between;
-  padding: 0.5em 0 0.5em 0;
 }
 
 .inputHeader h2 {
