@@ -6,7 +6,6 @@
         <button v-if="!isPopped" @click="popClicked" class="uiButton">pop</button>
         <button v-if="!isPopped" class="uiButton">copy expression</button>
       </div>
-      
       <div id="outputContainer">
         <div class="cronElement">
           <span class="timeLabel">Minutes</span> <br>
@@ -92,7 +91,7 @@ export default {
 
     overflow: auto;
 
-    display: inline-block; 
+    display: inline-block;
     display: flex;
     flex: 1;
     justify-content: center; /* align horizontal */
@@ -135,6 +134,7 @@ export default {
 
   #controls {
     display: flex;
+    margin-bottom: 10px;
   }
 
   button {

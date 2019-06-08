@@ -1,6 +1,9 @@
 <template>
   <div id="minuteContainer">
-    <h2>Minutes</h2>
+    <header class="inputHeader">
+      <h2>Minutes</h2>
+      <select-all-button :expression="minuteExpression" @selectAllClicked="(val) => selectAllClicked(val)"/>
+    </header>
     <ul v-recognizer:pan.start="onPanStart" v-recognizer:pan.move="onPanMove" v-recognizer:pan.end="onPanEnd">
       <li v-for="minute in minutes" :key="minute.id" :id="minute.id">
         <toggle-button :content="minute.label" :toggleId="'minuteNumber_' + minute.number" @toggled="(val) => minuteToggled(minute.number, val)"/>
@@ -11,11 +14,14 @@
 
 <script>
 import ToggleButton from './ToggleButton'
+import SelectAllButton from './SelectAllButton'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'Minute',
   components: {
-    ToggleButton
+    ToggleButton,
+    SelectAllButton
   },
   data () {
     return {
@@ -56,12 +62,28 @@ export default {
     minuteToggled (minute, active) {
       this.pushMinuteStateToStore(minute, active)
     },
-    pushMinuteStateToStore(minute, active) {
+    pushMinuteStateToStore (minute, active) {
       this.$store.commit('setMinute', {
         minute: minute,
         active: active
       })
+    },
+    selectAllClicked (all) {
+      for (let i = 0; i < 60; i++) {
+        let inputElem = document.getElementById('minute_' + i).getElementsByTagName('input')[0]
+        if (all && !inputElem.checked) {
+          inputElem.click()
+        }
+        else if (!all && inputElem.checked) {
+          inputElem.click()
+        }
+      }
     }
+  },
+  computed: {
+    ...mapGetters([
+      'minuteExpression'
+    ])
   },
   beforeMount () {
     for (let i = 0; i < 60; i++) {

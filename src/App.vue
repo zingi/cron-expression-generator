@@ -51,7 +51,7 @@ export default {
   grid-template-columns: minmax(0, 1fr) 400px 400px 400px minmax(0, 1fr);
   grid-template-rows: 40px 300px 300px minmax(0, 1fr);
 
-  grid-template-areas: 
+  grid-template-areas:
   '.  tit tit tit .'
   '.  hoc mic dwc .'
   '.  dmc moc cex .'
@@ -66,8 +66,8 @@ export default {
 #dayOfWeekContainer { grid-area: dwc }
 #cronExpressionGridItem { grid-area: cex }
 
-// @media (min-width: 1280px) { 
-// } 
+// @media (min-width: 1280px) {
+// }
 
 .container {
   display: flex;
@@ -94,9 +94,14 @@ export default {
   display: inline-block;
 }
 
-.container h2 {
-  text-align: center;
-  padding: 1em;
+.inputHeader {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5em 0 0.5em 0;
+}
+
+.inputHeader h2 {
+  text-align: left;
   user-select: none;
 }
 
@@ -108,6 +113,9 @@ h1 {
   text-align: center;
 }
 
+button {
+  cursor: pointer;
+}
 .uiButton {
   background: #6c5ce7;
   color: white;

@@ -1,6 +1,9 @@
 <template>
   <div id="hourContainer">
-    <h2>Hours</h2>
+    <header class="inputHeader">
+      <h2>Hours</h2>
+      <select-all-button :expression="hourExpression" @selectAllClicked="(val) => selectAllClicked(val)"/>
+    </header>
     <ul v-recognizer:pan.start="onPanStart" v-recognizer:pan.move="onPanMove" v-recognizer:pan.end="onPanEnd">
       <li v-for="hour in hours" :key="hour.id" :id="hour.id">
         <toggle-button :content="hour.label" :toggleId="'hourNumber_' + hour.number" @toggled="(val) => hourToggled(hour.number, val)"/>
@@ -11,11 +14,14 @@
 
 <script>
 import ToggleButton from './ToggleButton'
+import SelectAllButton from './SelectAllButton'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'Hour',
   components: {
-    ToggleButton
+    ToggleButton,
+    SelectAllButton
   },
   data () {
     return {
@@ -37,8 +43,8 @@ export default {
       let id = document.elementFromPoint(event.center.x, event.center.y).id
       if (id.startsWith('hourNumber')) {
         id = id.replace('Number', '')
-        let inputElem = document.getElementById(id).getElementsByTagName('input')[0] 
-        if (inputElem.checked != this.checking) {
+        let inputElem = document.getElementById(id).getElementsByTagName('input')[0]
+        if (inputElem.checked !== this.checking) {
           inputElem.click()
         }
       }
@@ -49,12 +55,28 @@ export default {
     hourToggled (hour, active) {
       this.pushHourStateToStore(hour, active)
     },
-    pushHourStateToStore(hour, active) {
+    pushHourStateToStore (hour, active) {
       this.$store.commit('setHour', {
         hour: hour,
         active: active
       })
+    },
+    selectAllClicked (all) {
+      for (let i = 0; i < 24; i++) {
+        let inputElem = document.getElementById('hour_' + i).getElementsByTagName('input')[0]
+        if (all && !inputElem.checked) {
+          inputElem.click()
+        }
+        else if (!all && inputElem.checked) {
+          inputElem.click()
+        }
+      }
     }
+  },
+  computed: {
+    ...mapGetters([
+      'hourExpression'
+    ])
   },
   beforeMount () {
     for (let i = 0; i < 24; i++) {

@@ -1,6 +1,9 @@
 <template>
   <div id="monthContainer">
-    <h2>Month</h2>
+    <header class="inputHeader">
+      <h2>Month</h2>
+      <select-all-button :expression="monthExpression" @selectAllClicked="(val) => selectAllClicked(val)"/>
+    </header>
     <ul v-recognizer:pan.start="onPanStart" v-recognizer:pan.move="onPanMove" v-recognizer:pan.end="onPanEnd">
       <li v-for="month in months" :key="month.id" :id="month.id">
         <toggle-button :content="month.label" :toggleId="'monthNumber_' + month.number" @toggled="(val) => monthToggled(month.number, val)"/>
@@ -11,11 +14,14 @@
 
 <script>
 import ToggleButton from './ToggleButton'
+import SelectAllButton from './SelectAllButton'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'Month',
   components: {
-    ToggleButton
+    ToggleButton,
+    SelectAllButton
   },
   data () {
     return {
@@ -37,8 +43,8 @@ export default {
       let id = document.elementFromPoint(event.center.x, event.center.y).id
       if (id.startsWith('monthNumber')) {
         id = id.replace('Number', '')
-        let inputElem = document.getElementById(id).getElementsByTagName('input')[0] 
-        if (inputElem.checked != this.checking) {
+        let inputElem = document.getElementById(id).getElementsByTagName('input')[0]
+        if (inputElem.checked !== this.checking) {
           inputElem.click()
         }
       }
@@ -49,26 +55,42 @@ export default {
     monthToggled (day, active) {
       this.pushMonthStateToStore(day, active)
     },
-    pushMonthStateToStore(day, active) {
+    pushMonthStateToStore (day, active) {
       this.$store.commit('setMonth', {
         month: day,
         active: active
       })
+    },
+    selectAllClicked (all) {
+      for (let i = 0; i < 60; i++) {
+        let inputElem = document.getElementById('month_' + i).getElementsByTagName('input')[0]
+        if (all && !inputElem.checked) {
+          inputElem.click()
+        }
+        else if (!all && inputElem.checked) {
+          inputElem.click()
+        }
+      }
     }
   },
+  computed: {
+    ...mapGetters([
+      'monthExpression'
+    ])
+  },
   beforeMount () {
-    this.months.push({ label: 'Jan.', number: 0, id: 'month_0'})
-    this.months.push({ label: 'Feb.', number: 1, id: 'month_1'})
-    this.months.push({ label: 'Mar.', number: 2, id: 'month_2'})
-    this.months.push({ label: 'Apr.', number: 3, id: 'month_3'})
-    this.months.push({ label: 'May', number: 4, id: 'month_4'})
-    this.months.push({ label: 'June', number: 5, id: 'month_5'})
-    this.months.push({ label: 'July', number: 6, id: 'month_6'})
-    this.months.push({ label: 'Aug.', number: 7, id: 'month_7'})
-    this.months.push({ label: 'Sep.', number: 8, id: 'month_8'})
-    this.months.push({ label: 'Oct.', number: 9, id: 'month_9'})
-    this.months.push({ label: 'Nov.', number: 10, id: 'month_10'})
-    this.months.push({ label: 'Dec.', number: 11, id: 'month_11'})
+    this.months.push({ label: 'Jan.', number: 0, id: 'month_0' })
+    this.months.push({ label: 'Feb.', number: 1, id: 'month_1' })
+    this.months.push({ label: 'Mar.', number: 2, id: 'month_2' })
+    this.months.push({ label: 'Apr.', number: 3, id: 'month_3' })
+    this.months.push({ label: 'May', number: 4, id: 'month_4' })
+    this.months.push({ label: 'June', number: 5, id: 'month_5' })
+    this.months.push({ label: 'July', number: 6, id: 'month_6' })
+    this.months.push({ label: 'Aug.', number: 7, id: 'month_7' })
+    this.months.push({ label: 'Sep.', number: 8, id: 'month_8' })
+    this.months.push({ label: 'Oct.', number: 9, id: 'month_9' })
+    this.months.push({ label: 'Nov.', number: 10, id: 'month_10' })
+    this.months.push({ label: 'Dec.', number: 11, id: 'month_11' })
   }
 }
 </script>

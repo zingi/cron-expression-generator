@@ -1,6 +1,9 @@
 <template>
   <div id="dayOfWeekContainer">
-    <h2>Day Of Week</h2>
+    <header class="inputHeader">
+      <h2>Day Of Week</h2>
+      <select-all-button :expression="dayOfWeekExpression" @selectAllClicked="(val) => selectAllClicked(val)"/>
+    </header>
     <ul v-recognizer:pan.start="onPanStart" v-recognizer:pan.move="onPanMove" v-recognizer:pan.end="onPanEnd">
       <li v-for="day in days" :key="day.id" :id="day.id">
         <toggle-button :content="day.label" :toggleId="'dayOfWeekNumber_' + day.number" @toggled="(val) => dayToggled(day.number, val)"/>
@@ -11,11 +14,14 @@
 
 <script>
 import ToggleButton from './ToggleButton'
+import SelectAllButton from './SelectAllButton'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'DayOfWeek',
   components: {
-    ToggleButton
+    ToggleButton,
+    SelectAllButton
   },
   data () {
     return {
@@ -37,8 +43,8 @@ export default {
       let id = document.elementFromPoint(event.center.x, event.center.y).id
       if (id.startsWith('dayOfWeekNumber')) {
         id = id.replace('Number', '')
-        let inputElem = document.getElementById(id).getElementsByTagName('input')[0] 
-        if (inputElem.checked != this.checking) {
+        let inputElem = document.getElementById(id).getElementsByTagName('input')[0]
+        if (inputElem.checked !== this.checking) {
           inputElem.click()
         }
       }
@@ -49,21 +55,37 @@ export default {
     dayToggled (day, active) {
       this.pushDayOfWeekStateToStore(day, active)
     },
-    pushDayOfWeekStateToStore(day, active) {
+    pushDayOfWeekStateToStore (day, active) {
       this.$store.commit('setDayOfWeek', {
         dayOfWeek: day,
         active: active
       })
+    },
+    selectAllClicked (all) {
+      for (let i = 0; i < 7; i++) {
+        let inputElem = document.getElementById('dayOfWeek_' + i).getElementsByTagName('input')[0]
+        if (all && !inputElem.checked) {
+          inputElem.click()
+        }
+        else if (!all && inputElem.checked) {
+          inputElem.click()
+        }
+      }
     }
   },
+  computed: {
+    ...mapGetters([
+      'dayOfWeekExpression'
+    ])
+  },
   beforeMount () {
-    this.days.push({ label: 'SUN', number: 0, id: 'dayOfWeek_0'});
-    this.days.push({ label: 'MON', number: 1, id: 'dayOfWeek_1'});
-    this.days.push({ label: 'TUE', number: 2, id: 'dayOfWeek_2'});
-    this.days.push({ label: 'WED', number: 3, id: 'dayOfWeek_3'});
-    this.days.push({ label: 'THU', number: 4, id: 'dayOfWeek_4'});
-    this.days.push({ label: 'FRI', number: 5, id: 'dayOfWeek_5'});
-    this.days.push({ label: 'SAT', number: 6, id: 'dayOfWeek_6'});
+    this.days.push({ label: 'SUN', number: 0, id: 'dayOfWeek_0' })
+    this.days.push({ label: 'MON', number: 1, id: 'dayOfWeek_1' })
+    this.days.push({ label: 'TUE', number: 2, id: 'dayOfWeek_2' })
+    this.days.push({ label: 'WED', number: 3, id: 'dayOfWeek_3' })
+    this.days.push({ label: 'THU', number: 4, id: 'dayOfWeek_4' })
+    this.days.push({ label: 'FRI', number: 5, id: 'dayOfWeek_5' })
+    this.days.push({ label: 'SAT', number: 6, id: 'dayOfWeek_6' })
   }
 }
 </script>

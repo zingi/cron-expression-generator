@@ -1,6 +1,9 @@
 <template>
   <div id="dayOfMonthContainer">
-    <h2>Day Of Month</h2>
+    <header class="inputHeader">
+      <h2>Day Of Month</h2>
+      <select-all-button :expression="dayOfMonthExpression" @selectAllClicked="(val) => selectAllClicked(val)"/>
+    </header>
     <ul v-recognizer:pan.start="onPanStart" v-recognizer:pan.move="onPanMove" v-recognizer:pan.end="onPanEnd">
       <li v-for="day in days" :key="day.id" :id="day.id">
         <toggle-button :content="day.label" :toggleId="'dayOfMonthNumber_' + day.number" @toggled="(val) => dayToggled(day.number, val)"/>
@@ -11,11 +14,14 @@
 
 <script>
 import ToggleButton from './ToggleButton'
+import SelectAllButton from './SelectAllButton'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'DayOfMonth',
   components: {
-    ToggleButton
+    ToggleButton,
+    SelectAllButton
   },
   data () {
     return {
@@ -54,7 +60,23 @@ export default {
         dayOfMonth: day,
         active: active
       })
+    },
+    selectAllClicked (all) {
+      for (let i = 0; i < 31; i++) {
+        let inputElem = document.getElementById('dayOfMonth_' + i).getElementsByTagName('input')[0]
+        if (all && !inputElem.checked) {
+          inputElem.click()
+        }
+        else if (!all && inputElem.checked) {
+          inputElem.click()
+        }
+      }
     }
+  },
+  computed: {
+    ...mapGetters([
+      'dayOfMonthExpression'
+    ])
   },
   beforeMount () {
     for (let i = 0; i < 31; i++) {

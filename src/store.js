@@ -29,7 +29,7 @@ export default new Vuex.Store({
           state.dayOfMonth.push(false)
         }
         state.minute.push(false)
-      }      
+      }
     },
     setMinute (state, payload) {
       Vue.set(state.minute, payload.minute, payload.active)
