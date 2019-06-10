@@ -96,10 +96,6 @@ export default {
 </script>
 
 <style scoped>
-  #monthContainer {
-    height: 250px;
-  }
-
   ul {
     grid-template-columns: repeat(6, 1fr);
     grid-template-rows: repeat(2, 1fr);

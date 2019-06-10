@@ -43,8 +43,8 @@ export default {
       let id = document.elementFromPoint(event.center.x, event.center.y).id
       if (id.startsWith('dayOfMonthNumber')) {
         id = id.replace('Number', '')
-        let inputElem = document.getElementById(id).getElementsByTagName('input')[0] 
-        if (inputElem.checked != this.checking) {
+        let inputElem = document.getElementById(id).getElementsByTagName('input')[0]
+        if (inputElem.checked !== this.checking) {
           inputElem.click()
         }
       }
@@ -55,7 +55,7 @@ export default {
     dayToggled (day, active) {
       this.pushDayOfMonthStateToStore(day, active)
     },
-    pushDayOfMonthStateToStore(day, active) {
+    pushDayOfMonthStateToStore (day, active) {
       this.$store.commit('setDayOfMonth', {
         dayOfMonth: day,
         active: active
@@ -92,10 +92,6 @@ export default {
 </script>
 
 <style scoped>
-  #dayOfMonthContainer {
-    height: 250px;
-  }
-
   ul {
     grid-template-columns: repeat(10, 1fr);
     grid-template-rows: repeat(4, 1fr);
@@ -139,7 +135,3 @@ export default {
   #dayOfMonth_29 { grid-area: dm30 }
   #dayOfMonth_30 { grid-area: dm31 }
 </style>
-
-
-
-

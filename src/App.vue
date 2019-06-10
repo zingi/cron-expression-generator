@@ -67,8 +67,18 @@ export default {
 #cronExpressionGridItem { grid-area: cex }
 
 @media (min-width: 1280px) {
+  #minuteContainer        { height: 300px; }
+  #hourContainer          { height: 300px; }
+  #dayOfMonthContainer    { height: 300px; }
+  #monthContainer         { height: 300px; }
+  #dayOfWeekContainer     { height: 300px; }
+  #cronExpressionGridItem { height: 300px; }
   .container {
     padding: 5px 30px 30px 30px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  }
+  .inputHeader {
+    padding: 0.5em 0 0.5em 0;
   }
 }
 
@@ -83,9 +93,16 @@ export default {
     '.  dwc dmc  .'
     '.  moc cex  .';
   }
+  #minuteContainer        { height: 300px; }
+  #hourContainer          { height: 300px; }
+  #dayOfMonthContainer    { height: 300px; }
+  #monthContainer         { height: 300px; }
+  #dayOfWeekContainer     { height: 300px; }
+  #cronExpressionGridItem { height: 300px; }
 
   .container {
     padding: 5px 30px 30px 30px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
   }
   .inputHeader {
     padding: 0.5em 0 0.5em 0;
@@ -95,7 +112,7 @@ export default {
 @media (min-width: 600px) and (max-width: 833px) {
   #app {
     grid-template-columns: 5px 1fr 1fr 5px;
-    grid-template-rows: 40px 260px 260px 260px minmax(0, 1fr);
+    grid-template-rows: 40px 200px 200px 200px minmax(0, 1fr);
 
     grid-template-areas:
     '. tit tit .'
@@ -104,28 +121,17 @@ export default {
     '. moc cex .';
   }
 
-  .container { 
+  .container {
     padding: 5px 5px 5px 5px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
   }
 
-  #minuteContainer { 
-    height: 200px;
-  }
-  #hourContainer { 
-    height: 200px;
-  }
-  #dayOfMonthContainer {
-    height: 200px;
-  }
-  #monthContainer { 
-    height: 200px;
-  }
-  #dayOfWeekContainer { 
-    height: 200px;
-  }
-  #cronExpressionGridItem { 
-    height: 200px;
-  }
+  #minuteContainer        { height: 200px; }
+  #hourContainer          { height: 200px; }
+  #dayOfMonthContainer    { height: 200px; }
+  #monthContainer         { height: 200px; }
+  #dayOfWeekContainer     { height: 200px; }
+  #cronExpressionGridItem { height: 200px; }
   .inputHeader {
     padding: 0 0 0.5em 0;
   }
@@ -136,7 +142,7 @@ export default {
     grid-column-gap: 0;
     grid-row-gap: 5px;
     grid-template-columns: 0.02fr 1fr 0.02fr;
-    grid-template-rows: 30px 260px 260px 260px 260px 260px 260px;
+    grid-template-rows: 30px 200px 200px 200px 200px 200px 200px;
 
     grid-template-areas:
     'tit tit tit'
@@ -148,32 +154,33 @@ export default {
     '.   cex .  ';
   }
 
-  .container { 
+  .container {
     padding: 5px 5px 5px 5px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   }
 
-  #hourContainer { 
+  #hourContainer {
     height: 200px;
   }
-  #minuteContainer { 
+  #minuteContainer {
     height: 200px;
   }
-  #dayOfWeekContainer { 
+  #dayOfWeekContainer {
     height: 200px;
   }
   #dayOfMonthContainer {
     height: 200px;
   }
-  #monthContainer { 
+  #monthContainer {
     height: 200px;
   }
-  #cronExpressionGridItem { 
+  #cronExpressionGridItem {
     height: 200px;
   }
   .inputHeader {
     padding: 0 0 0.5em 0;
   }
-  h1 { 
+  h1 {
     font-size: 1.5em;
   }
 }
@@ -186,7 +193,6 @@ export default {
 
   background: white;
   border-radius: 5px;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
 }
 
 .container ul {
@@ -229,8 +235,5 @@ button {
   color: white;
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   transition: all 0.3s cubic-bezier(.25,.8,.25,1);
-}
-.uiButton:hover {
-  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
 </style>

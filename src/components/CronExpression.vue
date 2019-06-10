@@ -74,24 +74,31 @@ export default {
 </script>
 
 <style scoped>
+  #cronExpressionGridItem {
+    display: flex;
+    flex-direction: column;
+  }
+
   #cronExpressionContainer {
+    flex: 1;
     display: flex;
     flex-direction: column;
     overflow: auto;
     box-sizing: border-box;
 
     border-radius: 15px;
-    padding: 15px;
     box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-
     transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+  }
+  #cronExpressionContainer.notPopped {
+    padding: 15px;
+  }
+  #cronExpressionContainer.popped {
+    padding: 5px;
   }
 
   #outputContainer {
-    /* max-height: 220px; */
-
     overflow: auto;
-
     display: inline-block;
     display: flex;
     flex: 1;
@@ -103,7 +110,6 @@ export default {
     padding: 5px;
     font-size: 1em;
     flex: 1;
-    /* max-width: 100px; */
     word-break: break-word;
   }
 
@@ -115,12 +121,11 @@ export default {
 
   .notPopped {
     background: white;
-    height: 250px;
   }
 
   .popped {
     position: fixed;
-    height: 50px;
+    height: 100px;
     bottom: 10px;
     left: 10px;
     right: 10px;
@@ -136,6 +141,9 @@ export default {
   #controls {
     display: flex;
     margin-bottom: 10px;
+  }
+  .popped #controls {
+    display: none;
   }
 
   button {

@@ -91,10 +91,6 @@ export default {
 </script>
 
 <style scoped>
-    #dayOfWeekContainer {
-    height: 250px;
-  }
-
   ul {
     grid-template-columns: repeat(7, 1fr);
     grid-template-rows: repeat(1, 1fr);
