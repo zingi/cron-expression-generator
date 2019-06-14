@@ -62,6 +62,9 @@ export default new Vuex.Store({
     },
     dayOfWeekExpression: state => {
       return ceh.calcDayOfWeekExpression(state.dayOfWeek)
+    },
+    expression: (state, getters) => {
+      return `${getters.minuteExpression} ${getters.hourExpression} ${getters.dayOfMonthExpression} ${getters.monthExpression} ${getters.dayOfWeekExpression}`;
     }
   }
 })

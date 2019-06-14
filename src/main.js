@@ -3,9 +3,13 @@ import App from './App.vue'
 import store from './store'
 import VueRecognizer from 'vue-recognizer'
 import VuePressure from 'vue-pressure'
+import Clipboard from 'v-clipboard'
+import Toasted from 'vue-toasted'
 
 Vue.use(VueRecognizer)
 Vue.use(VuePressure)
+Vue.use(Clipboard)
+Vue.use(Toasted, { position: 'top-center', duration: 5000, singleton: true })
 
 Vue.config.productionTip = false
 

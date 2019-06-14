@@ -4,7 +4,7 @@ export default class CronExpressionHandler {
       return '*'
     }
     if (arr.slice(min, max + 1).every(val => { return !val })) {
-      return '-'
+      return 'x'
     }
 
     let result = ''

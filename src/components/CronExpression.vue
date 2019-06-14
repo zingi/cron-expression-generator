@@ -4,28 +4,28 @@
     v-pressure @pressureChange="handlePressureChange" @pressureEnd="handlePressureEnd">
       <div id="controls">
         <button v-if="!isPopped" @click="popClicked" class="uiButton">pop</button>
-        <button v-if="!isPopped" class="uiButton">copy expression</button>
+        <button v-if="!isPopped" @click="copyExpressionClicked" class="uiButton">copy expression</button>
       </div>
       <div id="outputContainer">
         <div class="cronElement">
           <span class="timeLabel">Minutes</span> <br>
-          <span id="cronMinutes">{{ isPopped ? (minute.length > maxPopLength ? minute.substring(0, maxPopLength) + '...' : minute) : minute }}</span>
+          <span class="expressionPart" id="cronMinutes">{{ minute }}</span>
         </div>
         <div class="cronElement">
           <span class="timeLabel">Hours</span> <br>
-          <span id="cronHours">{{ isPopped ? (hour.length > maxPopLength ? hour.substring(0, maxPopLength) + '...' : hour) : hour  }}</span>
+          <span class="expressionPart" id="cronHours">{{ hour  }}</span>
         </div>
         <div class="cronElement">
           <span class="timeLabel">Day of Month</span> <br>
-          <span id="cronDayOfMonth">{{ isPopped ? (dayOfMonth.length > maxPopLength ? dayOfMonth.substring(0, maxPopLength) + '...' : dayOfMonth) : dayOfMonth  }}</span>
+          <span class="expressionPart" id="cronDayOfMonth">{{ dayOfMonth  }}</span>
         </div>
         <div class="cronElement">
           <span class="timeLabel">Month</span> <br>
-          <span id="cronMonth">{{ isPopped ? (month.length > maxPopLength ? month.substring(0, maxPopLength) + '...' : month) : month }}</span>
+          <span class="expressionPart" id="cronMonth">{{ month }}</span>
         </div>
         <div class="cronElement">
           <span class="timeLabel">Day Of Week</span> <br>
-          <span id="cronDayOfWeek">{{ isPopped ? (dayOfWeek.length > maxPopLength ? dayOfWeek.substring(0, maxPopLength) + '...' : dayOfWeek) : dayOfWeek }}</span>
+          <span class="expressionPart" id="cronDayOfWeek">{{ dayOfWeek }}</span>
         </div>
       </div>
     </div>
@@ -40,7 +40,6 @@ export default {
   data () {
     return {
       isPopped: false,
-      maxPopLength: 5,
       currentScale: 1
     }
   },
@@ -58,7 +57,19 @@ export default {
       this.currentScale = 1
     },
     popClicked () {
-      this.isPopped = true;
+      this.isPopped = true
+    },
+    copyExpressionClicked () {
+      if (this.expression.includes('x')) {
+        this.$toasted.show('Invalid expression. Define all parts of the expression!', {
+          type: 'error'
+        })
+      }
+      else
+      {
+        this.$clipboard(this.expression)
+        this.$toasted.show('expression copied')
+      }
     }
   },
   computed: {
@@ -67,7 +78,8 @@ export default {
       hour: 'hourExpression',
       dayOfMonth: 'dayOfMonthExpression',
       month: 'monthExpression',
-      dayOfWeek: 'dayOfWeekExpression'
+      dayOfWeek: 'dayOfWeekExpression',
+      expression: 'expression'
     })
   }
 }
@@ -111,6 +123,7 @@ export default {
     font-size: 1em;
     flex: 1;
     word-break: break-word;
+    min-width: 0; /* for text-overflow: ellipsis to work */ 
   }
 
   .timeLabel {
@@ -125,11 +138,18 @@ export default {
 
   .popped {
     position: fixed;
-    height: 100px;
+    height: 80px;
     bottom: 10px;
     left: 10px;
     right: 10px;
     backdrop-filter: blur(5px);
+  }
+
+  .popped .expressionPart {
+    display: block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
 
   @supports not (backdrop-filter: blur(5px)) {
