@@ -7,10 +7,10 @@
         <th></th>
       </tr>
       <tr v-for="(trigger, index) in triggers" :key="`trigger-${index}`">
-        <td>{{ trigger.timestamp.format('DD MMM YYYY, HH:mm:ss') }}</td>
+        <td>{{ trigger.timestamp.format('DD MMM YYYY HH:mm:ss') }}</td>
         <td class="untilTableData">{{ trigger.until }}</td>
         <td class="imminentTableData">
-          <div class="imminentDiv" v-if="trigger.untilSeconds < 60" v-anime="{ rotate: '1turn', borderRadius: '50%', duration: 5000, loop: true }"></div>
+          <div class="imminentDiv" v-if="trigger.untilSeconds < 60" v-anime="{ rotate: '1turn', scale: 0.5, borderRadius: '50%', duration: 4000, direction: 'alternate', loop: true }"></div>
         </td>
       </tr>
     </table>
@@ -36,30 +36,34 @@ export default {
   methods: {
     calcTriggers () {
       let upcomingTriggersIterator = this.getUpcomingTriggersIterator()
-
+      // if the cron expression did change since the last tick, clear all previous caclulated triggers
       if (this.displayedExpression !== this.expression) {
         this.triggers = []
         this.displayedExpression = this.expression
       }
-
+      // if there are no calculated upcoming trigger times and the iterator is valid
       if (this.triggers.length < 1 && upcomingTriggersIterator != null) {
         for (let i = 0; i < this.entryCount; i++) {
           this.addTrigger(upcomingTriggersIterator.next().toDate())
         }
       }
+      // if there are previous calculated trigger times
       else if (upcomingTriggersIterator) {
+        // check if the nearest time is already past
         if (this.triggers[0].timestamp.isBefore(moment())) {
           this.triggers = []
           for (let i = 0; i < this.entryCount; i++) {
             this.addTrigger(upcomingTriggersIterator.next().toDate())
           }
         }
+        // update the countdown for all trigger times
         else {
           for (let trigger of this.triggers) {
             trigger.update()
           }
         }
       }
+      // if the current cron expression is not valid, clear previous calculated trigger times
       else {
         this.triggers = []
       }
@@ -116,10 +120,12 @@ export default {
 </script>
 
 <style scoped>
-  td {
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 1em;
+  #triggerTableContainer {
+    box-sizing: border-box;
+    overflow: auto;
   }
+
+  td { font-family: 'Courier New', Courier, monospace; }
 
   .untilTableData {
     background: #ecf0f1;
