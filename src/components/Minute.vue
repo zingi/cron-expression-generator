@@ -51,7 +51,7 @@ export default {
          * if .checked=true is directly accessed, it doesn't update the model value,
          * so trigger an event in order to change the checked AND model value
          */
-        if (inputElem.checked != this.checking) {
+        if (inputElem.checked !== this.checking) {
           inputElem.click()
         }
       }

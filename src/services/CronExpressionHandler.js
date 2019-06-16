@@ -11,7 +11,7 @@ export default class CronExpressionHandler {
     let i = arr.indexOf(true, min)
 
     while (i <= max && i >= min) {
-      if (i == max) {
+      if (i === max) {
         result += result.length > 0 ? ',' : ''
         result += i
         // quit while
@@ -22,7 +22,7 @@ export default class CronExpressionHandler {
         let j = i + 1
         while (true) {
           // if max or not-trigger reached
-          if (j == max || !arr[j + 1]) {
+          if (j === max || !arr[j + 1]) {
             break
           }
           // if streak continous
@@ -34,7 +34,7 @@ export default class CronExpressionHandler {
         result += i + '-' + j
 
         // if streak reached max, quit while
-        if (j == max) {
+        if (j === max) {
           i = max + 1
         }
         // continue processing on nex trigger after found streak
@@ -48,7 +48,7 @@ export default class CronExpressionHandler {
         let didReachEnd = false
         // count breaks of potential pattern
         while (!arr[++b] && !didReachEnd) {
-          if (b == max) {
+          if (b === max) {
             didReachEnd = true
           }
           else {
@@ -79,7 +79,7 @@ export default class CronExpressionHandler {
               // check if there were an actual pattern step
               if (lastGoodStep > 0) {
                 // check if the pattern started at the beginnig of the array
-                if (i == min) {
+                if (i === min) {
                   result = '*/' + (breakCount + 1)
                 }
                 else {
@@ -100,8 +100,8 @@ export default class CronExpressionHandler {
               if (arr[p + breakCount + 1]) {
                 lastGoodStep = p
 
-                if (p + breakCount + 1 == max) {
-                  if (i == min) {
+                if (p + breakCount + 1 === max) {
+                  if (i === min) {
                     result = '*/' + (breakCount + 1) // TODO: find usecase
                   }
                   else {
@@ -170,13 +170,13 @@ export default class CronExpressionHandler {
 
   calcDayOfMonthExpression (arr) {
     let arrClone = [...arr]
-    arrClone.unshift(false);
+    arrClone.unshift(false)
     return this.calcExpression(arrClone, 1, 31)
   }
 
   calcMonthExpression (arr) {
     let arrClone = [...arr]
-    arrClone.unshift(false);
+    arrClone.unshift(false)
     return this.calcExpression(arrClone, 1, 12)
   }
 

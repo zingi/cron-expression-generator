@@ -65,8 +65,7 @@ export default {
           type: 'error'
         })
       }
-      else
-      {
+      else {
         this.$clipboard(this.expression)
         this.$toasted.show('expression copied')
       }
@@ -123,7 +122,7 @@ export default {
     font-size: 1em;
     flex: 1;
     word-break: break-word;
-    min-width: 0; /* for text-overflow: ellipsis to work */ 
+    min-width: 0; /* for text-overflow: ellipsis to work */
   }
 
   .timeLabel {
