@@ -62,7 +62,7 @@ export default {
       })
     },
     selectAllClicked (all) {
-      for (let i = 0; i < 60; i++) {
+      for (let i = 0; i < 12; i++) {
         let inputElem = document.getElementById('month_' + i).getElementsByTagName('input')[0]
         if (all && !inputElem.checked) {
           inputElem.click()
