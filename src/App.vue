@@ -45,6 +45,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
 
   width: 100vw;
+  max-width: 100%;
 
   display: grid;
 
@@ -57,7 +58,7 @@ export default {
   '.  tit tit tit .'
   '.  hoc mic dwc .'
   '.  dmc moc cex .'
-  '.  ttc .   .   .'
+  '.  .   .   ttc .'
   '.  .   .   .   .';
 }
 
@@ -90,7 +91,7 @@ export default {
     '.  hoc mic  .'
     '.  dwc dmc  .'
     '.  moc cex  .'
-    '.  ttc .    .'
+    '.  .   ttc  .'
     '.  .   .    .';
   }
 
@@ -113,7 +114,7 @@ export default {
     '.  hoc mic .'
     '.  dwc dmc .'
     '.  moc cex .'
-    '.  ttc .   .'
+    '.  .   ttc .'
     '.  .   .   .';
   }
 
@@ -132,7 +133,7 @@ export default {
     grid-column-gap: 0;
     grid-row-gap: 5px;
     grid-template-columns: 0.02fr 1fr 0.02fr;
-    grid-template-rows: 30px 200px 200px 200px 200px 200px 200px 200px;
+    grid-template-rows: 30px 200px 200px 200px 200px 200px 200px 200px 100px;
 
     grid-template-areas:
     'tit tit tit'
@@ -142,7 +143,8 @@ export default {
     '.   dmc .  '
     '.   moc .  '
     '.   cex .  '
-    '.   ttc .  ';
+    '.   ttc .  '
+    '.   .   .  ';
   }
 
   .container {
