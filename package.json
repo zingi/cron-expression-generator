@@ -1,6 +1,6 @@
 {
   "name": "cron-expression-generator",
-  "version": "0.1.0",
+  "version": "0.5.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -9,7 +9,14 @@
   },
   "dependencies": {
     "core-js": "^2.6.5",
+    "cron-parser": "^2.12.0",
+    "moment": "^2.24.0",
+    "v-clipboard": "^2.2.2",
     "vue": "^2.6.10",
+    "vue-animejs": "^2.1.1",
+    "vue-pressure": "^2.1.0",
+    "vue-recognizer": "^1.0.0",
+    "vue-toasted": "^1.1.27",
     "vuex": "^3.0.1"
   },
   "devDependencies": {
@@ -33,7 +40,15 @@
       "plugin:vue/essential",
       "@vue/standard"
     ],
-    "rules": {},
+    "rules": {
+      "brace-style": [
+        2,
+        "stroustrup",
+        {
+          "allowSingleLine": true
+        }
+      ]
+    },
     "parserOptions": {
       "parser": "babel-eslint"
     }
@@ -46,5 +61,9 @@
   "browserslist": [
     "> 1%",
     "last 2 versions"
-  ]
+  ],
+  "vue" : {
+    "outputDir": "docs",
+    "publicPath": "/cron-expression-generator/"
+  }
 }
