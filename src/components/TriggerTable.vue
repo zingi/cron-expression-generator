@@ -1,6 +1,6 @@
 <template>
   <div id="triggerTableContainer">
-    <table>
+    <table v-if="!expression.includes('x')">
       <tr>
         <th>Date</th>
         <th>Countdown</th>
@@ -14,6 +14,7 @@
         </td>
       </tr>
     </table>
+    <span v-else id="hint">To display the next few upcoming trigger times, define all expression parts.</span>
   </div>
 </template>
 
@@ -77,7 +78,7 @@ export default {
         untilSeconds: -1,
         update: function () {
           let duration = moment.duration(this.timestamp.diff(moment()), 'milliseconds')
-          if (duration.days() > 0) {
+          if (duration.asDays() > 1) {
             this.until = '...'
           }
           else {
@@ -139,5 +140,9 @@ export default {
     background-color: #e74c3c;
     width: 10px;
     height: 10px;
+  }
+
+  #hint {
+    margin: 20px 10px 0 10px;
   }
 </style>
