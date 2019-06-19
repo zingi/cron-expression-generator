@@ -7,6 +7,7 @@
     <month class="container"/>
     <day-of-week class="container"/>
     <trigger-table class="container"/>
+    <trigger-calendar class="container" />
     <cron-expression />
   </div>
 </template>
@@ -19,6 +20,7 @@ import Month from './components/Month'
 import DayOfWeek from './components/DayOfWeek'
 import CronExpression from './components/CronExpression'
 import TriggerTable from './components/TriggerTable'
+import TriggerCalendar from './components/TriggerCalendar'
 
 export default {
   name: 'app',
@@ -29,7 +31,8 @@ export default {
     Month,
     DayOfWeek,
     CronExpression,
-    TriggerTable
+    TriggerTable,
+    TriggerCalendar
   },
   beforeCreate () {
     this.$store.commit('setup')
@@ -58,7 +61,7 @@ export default {
   '.  tit tit tit .'
   '.  hoc mic dwc .'
   '.  dmc moc cex .'
-  '.  .   .   ttc .'
+  '.  .   tcc ttc .'
   '.  .   .   .   .';
 }
 
@@ -70,6 +73,7 @@ export default {
 #dayOfWeekContainer { grid-area: dwc }
 #cronExpressionGridItem { grid-area: cex }
 #triggerTableContainer { grid-area: ttc }
+#triggerCalendarContainer { grid-area: tcc }
 
 @media (min-width: 1280px) {
   .container {
@@ -91,7 +95,7 @@ export default {
     '.  hoc mic  .'
     '.  dwc dmc  .'
     '.  moc cex  .'
-    '.  .   ttc  .'
+    '.  tcc ttc  .'
     '.  .   .    .';
   }
 
