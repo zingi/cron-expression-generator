@@ -9,6 +9,8 @@
 </template>
 
 <script>
+import moment from 'moment'
+
 export default {
   name: 'TriggerCalendar',
   data () {
@@ -23,6 +25,62 @@ export default {
         gridArea: gridArea,
         content: content
       })
+    },
+    initYear (year) {
+      for (let month = 1; month <= 12; month++) {
+        let date = moment(`${year}-${month < 10 ? '0' + month : month}-01`)
+        let start = date.isoWeekday()
+        let monthPrefix = this.getMonthPrefix(month)
+        let day = 1
+
+        let index = this.cells.findIndex((element) => {
+          return element.id === `${monthPrefix}_${start}`
+        })
+
+        if (index > -1) {
+          while (date.month() + 1 === month) {
+            this.cells[index++].content = day++
+            date.add(1, 'days')
+          }
+        }
+      }
+
+      let yearLabelIndex = this.cells.findIndex((element) => {
+        return element.id === 'yea_la'
+      })
+      if (yearLabelIndex > -1) {
+        this.cells[yearLabelIndex].content = `${year}`
+      }
+    },
+    getMonthPrefix (month) {
+      switch (month) {
+        case 1:
+          return 'jan'
+        case 2:
+          return 'feb'
+        case 3:
+          return 'mar'
+        case 4:
+          return 'apr'
+        case 5:
+          return 'may'
+        case 6:
+          return 'jun'
+        case 7:
+          return 'jul'
+        case 8:
+          return 'aug'
+        case 9:
+          return 'sep'
+        case 10:
+          return 'oct'
+        case 11:
+          return 'nov'
+        case 12:
+          return 'dec'
+        default:
+          break
+      }
     }
   },
   beforeMount () {
@@ -86,7 +144,7 @@ export default {
     this.initCell('nov_la', 'nov-la', 'Nov')
     this.initCell('dec_la', 'dec-la', 'Dec')
 
-    this.initCell('yea_la', 'yea-la', '2019')
+    this.initCell('yea_la', 'yea-la')
 
     for (let row = 0; row < 4; row++) {
       this.initCell(`wd${row}_mo`, `wd${row}-mo`, 'M')
@@ -97,6 +155,8 @@ export default {
       this.initCell(`wd${row}_sa`, `wd${row}-sa`, 'S')
       this.initCell(`wd${row}_su`, `wd${row}-su`, 'S')
     }
+
+    this.initYear(moment().year())
   }
 }
 </script>
@@ -137,6 +197,6 @@ export default {
   }
 
   .cell {
-    font-size: 0.5em;
+    font-size: 7px;
   }
 </style>
