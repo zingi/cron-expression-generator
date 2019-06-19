@@ -1,7 +1,7 @@
 <template>
   <div id="triggerCalendarContainer">
 
-    <div v-for="cell of cells" :key="cell.id" :id="cell.id" :style='{ "grid-area": cell.gridArea}' class="cell">
+    <div v-for="cell of cells" :key="cell.id" :id="cell.id" :style='{ "grid-area": cell.gridArea}' class="cell" :class="{ active: cell.isActive }">
       {{cell.content}}
     </div>
 
@@ -10,46 +10,75 @@
 
 <script>
 import moment from 'moment'
+import parser from 'cron-parser'
 
 export default {
   name: 'TriggerCalendar',
   data () {
     return {
-      cells: []
+      cells: [],
+      dayMapping: null,
+      year: -1
     }
   },
   methods: {
+    /**
+     * adds a cell to the cells-array,
+     * which is used to display data in the year-grid
+     */
     initCell (id, gridArea, content = '') {
       this.cells.push({
         id: id,
         gridArea: gridArea,
-        content: content
+        content: content,
+        isActive: false
       })
     },
+    /**
+     * fills the grid with the day-layout of the provided year
+     */
     initYear (year) {
+      this.dayMapping = new Map()
+      // for every month
       for (let month = 1; month <= 12; month++) {
+        // fetch the first day of the month
         let date = moment(`${year}-${month < 10 ? '0' + month : month}-01`)
+        // get the weekday number (1-7) for the previously fetched first day
         let start = date.isoWeekday()
         let monthPrefix = this.getMonthPrefix(month)
         let day = 1
 
+        // find the index of the first-day-cell in the cells array
         let index = this.cells.findIndex((element) => {
           return element.id === `${monthPrefix}_${start}`
         })
 
+        // if the previous search was successful
         if (index > -1) {
+          // iterate over all days of the currently looked at month
           while (date.month() + 1 === month) {
-            this.cells[index++].content = day++
+            // set the day-number in the correct cell
+            this.cells[index].content = day
+            // keep a mapping of the day to the corresponding index in the cell array
+            this.dayMapping.set(`${year}-${month}-${day}`, index)
+
             date.add(1, 'days')
+            index++
+            day++
           }
         }
       }
 
+      // find index of year-label-cell in the cell array
       let yearLabelIndex = this.cells.findIndex((element) => {
         return element.id === 'yea_la'
       })
+      // if the previous search was successful
       if (yearLabelIndex > -1) {
+        // set the year label, to the provided year-number
         this.cells[yearLabelIndex].content = `${year}`
+        // save the year number also as member of this component for later usage
+        this.year = `${year}`
       }
     },
     getMonthPrefix (month) {
@@ -81,9 +110,42 @@ export default {
         default:
           break
       }
+    },
+    /**
+     * uses the computed simplified expression,
+     * to return an iterator which iterates over the upcoming days
+     * which hold a trigger-time
+     * with the simplified expression, the time-part (hour and minute)
+     * of the expression is ignored to reduce calculation work
+     */
+    getDailyTriggersIterator () {
+      try {
+        let iterator = parser.parseExpression(this.simplifiedExpression)
+        return iterator
+      }
+      catch (err) {
+        console.log('Error: ' + err.message)
+      }
+      return null
+    },
+    /**
+     * iterates over all days and sets their isActive flag to false
+     */
+    setAllDaysInactive () {
+      for (let day of this.dayMapping.keys()) {
+        let index = this.dayMapping.get(day)
+        if (index) {
+          this.cells[index].isActive = false
+        }
+      }
     }
   },
   beforeMount () {
+    /**
+     * construct grid layout
+     */
+
+    // create 12 7x6 cell-arrays for the months
     for (let i = 0; i < 4; i++) {
       for (let j = 0; j < 3; j++) {
         for (let c = 0; c < 42; c++) {
@@ -131,6 +193,7 @@ export default {
       }
     }
 
+    // create cells for the month labels
     this.initCell('jan_la', 'jan-la', 'Jan')
     this.initCell('feb_la', 'feb-la', 'Feb')
     this.initCell('mar_la', 'mar-la', 'Mar')
@@ -144,8 +207,10 @@ export default {
     this.initCell('nov_la', 'nov-la', 'Nov')
     this.initCell('dec_la', 'dec-la', 'Dec')
 
+    // create a cell for the year label
     this.initCell('yea_la', 'yea-la')
 
+    // create cells for the week-day lables on the bottom
     for (let row = 0; row < 4; row++) {
       this.initCell(`wd${row}_mo`, `wd${row}-mo`, 'M')
       this.initCell(`wd${row}_tu`, `wd${row}-tu`, 'T')
@@ -156,7 +221,53 @@ export default {
       this.initCell(`wd${row}_su`, `wd${row}-su`, 'S')
     }
 
+    // construct the layout of the current year in the previous generated cells
     this.initYear(moment().year())
+  },
+  computed: {
+    /**
+     * if the current cron expression is valid:
+     *    ignores the minute and hour part of the expression,
+     *    by exchanging both with only the first number: '0'
+     * else:
+     *    returns unmodified expression
+     */
+    simplifiedExpression () {
+      let expression = this.$store.getters.expression
+      if (expression.includes('x')) {
+        return expression
+      }
+      else {
+        let parts = expression.split(' ')
+        parts[0] = '0'
+        parts[1] = '0'
+        return parts.join(' ')
+      }
+    }
+  },
+  watch: {
+    simplifiedExpression (val) {
+      if (val.includes('x')) {
+        this.setAllDaysInactive()
+      }
+      else {
+        this.setAllDaysInactive()
+        let iterator = this.getDailyTriggersIterator()
+        let date = null
+
+        if (!iterator) {
+          console.warn('could not get daily-trigger-iterator; iterator was null')
+          return
+        }
+
+        while ((date = moment(iterator.next().toDate())).year().toString() === this.year) {
+          let index = this.dayMapping.get(`${date.year()}-${date.month() + 1}-${date.date()}`)
+          if (index) {
+            this.cells[index].isActive = true
+          }
+        }
+      }
+    }
   }
 }
 </script>
@@ -198,5 +309,9 @@ export default {
 
   .cell {
     font-size: 7px;
+  }
+
+  .active {
+    background: lightgreen;
   }
 </style>
