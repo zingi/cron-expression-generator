@@ -1,5 +1,5 @@
 <template>
-  <div id="triggerCalendarContainer">
+  <div id="triggerCalendarContainer" v-recognizer:swipe.right="onSwipeRight" v-recognizer:swipe.left="onSwipeLeft">
 
     <div v-for="cell of cells" :key="cell.id" :id="cell.id" :style='{ "grid-area": cell.gridArea}' class="cell" :class="{ active: cell.isActive }">
       {{cell.content}}
@@ -38,6 +38,7 @@ export default {
      * fills the grid with the day-layout of the provided year
      */
     initYear (year) {
+      this.clearYearLayout()
       this.dayMapping = new Map()
       // for every month
       for (let month = 1; month <= 12; month++) {
@@ -78,8 +79,10 @@ export default {
         // set the year label, to the provided year-number
         this.cells[yearLabelIndex].content = `${year}`
         // save the year number also as member of this component for later usage
-        this.year = `${year}`
+        this.year = parseInt(year)
       }
+
+      this.updateCalendarTriggerHighlighting()
     },
     getMonthPrefix (month) {
       switch (month) {
@@ -120,7 +123,17 @@ export default {
      */
     getDailyTriggersIterator () {
       try {
-        let iterator = parser.parseExpression(this.simplifiedExpression)
+        let iterator = null
+        if (this.year === moment().year()) {
+          iterator = parser.parseExpression(this.simplifiedExpression, {
+            currentDate: moment().subtract(1, 'days').toDate()
+          })
+        }
+        else {
+          iterator = parser.parseExpression(this.simplifiedExpression, {
+            currentDate: moment(`${this.year}-01-01`).subtract(1, 'days').toDate()
+          })
+        }
         return iterator
       }
       catch (err) {
@@ -136,6 +149,56 @@ export default {
         let index = this.dayMapping.get(day)
         if (index) {
           this.cells[index].isActive = false
+        }
+      }
+    },
+    clearYearLayout () {
+      if (this.dayMapping && this.dayMapping.size > 0) {
+        for (let day of this.dayMapping.keys()) {
+          this.cells[this.dayMapping.get(day)].content = ''
+          this.cells[this.dayMapping.get(day)].isActive = false
+        }
+      }
+    },
+    onSwipeLeft () {
+      this.initYear(this.year > 0 ? this.year + 1 : moment().year())
+    },
+    onSwipeRight () {
+      if (this.year > 0 && this.year > moment().year()) {
+        this.initYear(this.year - 1)
+      }
+      else {
+        this.$toasted.show('You can\'t go in the past!', {
+          type: 'error'
+        })
+        // wiggle the calendar
+        this.$anime.timeline().add({
+          targets: this.$el,
+          easing: 'easeInOutSine',
+          duration: 500,
+          translateX: [{ value: 16 }, { value: 16 * -1 }, { value: 16 / 2 }, { value: 16 / -2 }, { value: 0 }]
+        })
+      }
+    },
+    updateCalendarTriggerHighlighting () {
+      if (this.simplifiedExpression.includes('x')) {
+        this.setAllDaysInactive()
+      }
+      else {
+        this.setAllDaysInactive()
+        let iterator = this.getDailyTriggersIterator()
+        let date = null
+
+        if (!iterator) {
+          console.warn('could not get daily-trigger-iterator; iterator was null')
+          return
+        }
+
+        while ((date = moment(iterator.next().toDate())).year() === this.year) {
+          let index = this.dayMapping.get(`${date.year()}-${date.month() + 1}-${date.date()}`)
+          if (typeof index === 'number') {
+            this.cells[index].isActive = true
+          }
         }
       }
     }
@@ -247,26 +310,7 @@ export default {
   },
   watch: {
     simplifiedExpression (val) {
-      if (val.includes('x')) {
-        this.setAllDaysInactive()
-      }
-      else {
-        this.setAllDaysInactive()
-        let iterator = this.getDailyTriggersIterator()
-        let date = null
-
-        if (!iterator) {
-          console.warn('could not get daily-trigger-iterator; iterator was null')
-          return
-        }
-
-        while ((date = moment(iterator.next().toDate())).year().toString() === this.year) {
-          let index = this.dayMapping.get(`${date.year()}-${date.month() + 1}-${date.date()}`)
-          if (index) {
-            this.cells[index].isActive = true
-          }
-        }
-      }
+      this.updateCalendarTriggerHighlighting()
     }
   }
 }
@@ -274,6 +318,7 @@ export default {
 
 <style scoped>
   #triggerCalendarContainer {
+    user-select: none;
     display: grid;
 
     grid-template-columns: repeat(33, 1fr);
