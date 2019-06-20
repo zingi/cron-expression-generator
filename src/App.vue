@@ -91,7 +91,7 @@ export default {
 @media (min-width: 834px) and (max-width: 1280px) {
   #app {
     grid-template-columns: minmax(0, 1fr) 400px 400px minmax(0, 1fr);
-    grid-template-rows: 40px 300px 300px 300px 300px minmax(0, 1fr);
+    grid-template-rows: 40px 300px 300px 300px 300px 100px;
 
     grid-template-areas:
     '.  tit tit  .'
@@ -114,7 +114,7 @@ export default {
 @media (min-width: 600px) and (max-width: 833px) {
   #app {
     grid-template-columns: 5px 1fr 1fr 5px;
-    grid-template-rows: 40px 200px 200px 200px 200px minmax(0, 1fr);
+    grid-template-rows: 40px 200px 200px 200px 250px 100px;
 
     grid-template-areas:
     '.  tit tit .'
@@ -127,7 +127,7 @@ export default {
 
   .container {
     padding: 5px 5px 5px 5px;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   }
 
   .inputHeader {
