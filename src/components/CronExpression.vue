@@ -3,16 +3,16 @@
     <div id="cronExpressionContainer" :class="{ notPopped: !isPopped, popped: isPopped }" :style="{ transform: 'scale(' + currentScale + ')' }"
     v-pressure @pressureChange="handlePressureChange" @pressureEnd="handlePressureEnd">
       <div id="controls">
-        <button v-if="!isPopped" @click="popClicked" class="uiButton">pop</button>
+        <button v-if="!isPopped" @click="popClicked" class="uiButton" id="cronExpressionPopButton">pop</button>
         <button v-if="!isPopped" @click="copyExpressionClicked" class="uiButton">copy expression</button>
       </div>
       <div id="outputContainer">
         <div class="cronElement">
-          <span class="timeLabel">Minutes</span> <br>
+          <span class="timeLabel">Minute</span> <br>
           <span class="expressionPart" id="cronMinutes">{{ minute }}</span>
         </div>
         <div class="cronElement">
-          <span class="timeLabel">Hours</span> <br>
+          <span class="timeLabel">Hour</span> <br>
           <span class="expressionPart" id="cronHours">{{ hour  }}</span>
         </div>
         <div class="cronElement">
@@ -24,7 +24,7 @@
           <span class="expressionPart" id="cronMonth">{{ month }}</span>
         </div>
         <div class="cronElement">
-          <span class="timeLabel">Day Of Week</span> <br>
+          <span class="timeLabel">Day of Week</span> <br>
           <span class="expressionPart" id="cronDayOfWeek">{{ dayOfWeek }}</span>
         </div>
       </div>

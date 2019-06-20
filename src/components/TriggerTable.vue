@@ -7,10 +7,10 @@
         <th></th>
       </tr>
       <tr v-for="(trigger, index) in triggers" :key="`trigger-${index}`">
-        <td>{{ trigger.timestamp.format('DD MMM YYYY HH:mm:ss') }}</td>
+        <td>{{ trigger.timestamp.format('DD MMM YYYY HH:mm') }}</td>
         <td class="untilTableData">{{ trigger.until }}</td>
         <td class="imminentTableData">
-          <div class="imminentDiv" v-if="trigger.untilSeconds < 60" v-anime="{ rotate: '1turn', scale: 0.5, borderRadius: '50%', duration: 4000, direction: 'alternate', loop: true }"></div>
+          <div class="imminentDiv" :class="{ hidden: trigger.untilSeconds > 60}" v-anime="{ rotate: '1turn', scale: 0.5, borderRadius: '50%', duration: 4000, direction: 'alternate', loop: true }"></div>
         </td>
       </tr>
     </table>
@@ -126,9 +126,15 @@ export default {
     overflow: auto;
   }
 
+  table {
+    width: 100%;
+  }
+
+  th { user-select: none; }
   td { font-family: 'Courier New', Courier, monospace; }
 
   .untilTableData {
+    user-select: none;
     background: #ecf0f1;
     border-radius: 5px;
     text-align: center;
@@ -144,5 +150,9 @@ export default {
 
   #hint {
     margin: 20px 10px 0 10px;
+  }
+
+  .hidden {
+    visibility: hidden;
   }
 </style>
