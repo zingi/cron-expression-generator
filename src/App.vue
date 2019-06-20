@@ -83,6 +83,9 @@ export default {
   .inputHeader {
     padding: 0.5em 0 0.5em 0;
   }
+  #cronExpressionPopButton {
+    display: none;
+  }
 }
 
 @media (min-width: 834px) and (max-width: 1280px) {

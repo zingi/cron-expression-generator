@@ -36,6 +36,7 @@ export default {
 
 <style scoped>
   button {
+    user-select: none;
     border: none;
     border-radius: 3px;
     padding: 3px 6px 3px 6px;
