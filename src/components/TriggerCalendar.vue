@@ -11,6 +11,7 @@
 <script>
 import moment from 'moment'
 import parser from 'cron-parser'
+import TriggerCalcWorker from 'worker-loader!../workers/triggerTimesOfYear.worker.js'
 
 export default {
   name: 'TriggerCalendar',
@@ -18,7 +19,8 @@ export default {
     return {
       cells: [],
       dayMapping: null,
-      year: -1
+      year: -1,
+      worker: null
     }
   },
   methods: {
@@ -185,21 +187,28 @@ export default {
         this.setAllDaysInactive()
       }
       else {
-        this.setAllDaysInactive()
-        let iterator = this.getDailyTriggersIterator()
-        let date = null
-
-        if (!iterator) {
-          console.warn('could not get daily-trigger-iterator; iterator was null')
-          return
+        if (this.worker) {
+          this.worker.terminate()
         }
+        this.worker = new TriggerCalcWorker()
+        this.worker.postMessage({
+          simplifiedExpression: this.simplifiedExpression,
+          year: this.year,
+          dayMapping: this.dayMapping
+        })
 
-        while ((date = moment(iterator.next().toDate())).year() === this.year) {
-          let index = this.dayMapping.get(`${date.year()}-${date.month() + 1}-${date.date()}`)
-          if (typeof index === 'number') {
+        this.worker.addEventListener('message', (event) => {
+          // assure that the received version is up-to-date
+          if (event.data.simplifiedExpression !== this.simplifiedExpression) {
+            return
+          }
+
+          this.setAllDaysInactive()
+
+          for (let index of event.data.indexArr) {
             this.cells[index].isActive = true
           }
-        }
+        })
       }
     }
   },
@@ -354,6 +363,7 @@ export default {
 
   .cell {
     font-size: 7px;
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
   }
 
   .active {
