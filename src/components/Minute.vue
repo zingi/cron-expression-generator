@@ -1,7 +1,7 @@
 <template>
   <div id="minuteContainer">
     <header class="inputHeader">
-      <h2>Minutes</h2>
+      <h2>Minute</h2>
       <select-all-button :expression="minuteExpression" @selectAllClicked="(val) => selectAllClicked(val)"/>
     </header>
     <ul v-recognizer:pan.start="onPanStart" v-recognizer:pan.move="onPanMove" v-recognizer:pan.end="onPanEnd">
