@@ -10,7 +10,7 @@
 
 <script>
 import moment from 'moment'
-import parser from 'cron-parser'
+import TriggerCalcWorker from 'worker-loader!../workers/triggerTimesOfYear.worker.js'
 
 export default {
   name: 'TriggerCalendar',
@@ -18,7 +18,8 @@ export default {
     return {
       cells: [],
       dayMapping: null,
-      year: -1
+      year: -1,
+      worker: null
     }
   },
   methods: {
@@ -38,7 +39,9 @@ export default {
      * fills the grid with the day-layout of the provided year
      */
     initYear (year) {
+      // remove the labeling of the previous year
       this.clearYearLayout()
+      // reset the day mapping (day -> cells index)
       this.dayMapping = new Map()
       // for every month
       for (let month = 1; month <= 12; month++) {
@@ -82,6 +85,7 @@ export default {
         this.year = parseInt(year)
       }
 
+      // highlight all days which contain a trigger
       this.updateCalendarTriggerHighlighting()
     },
     getMonthPrefix (month) {
@@ -115,33 +119,6 @@ export default {
       }
     },
     /**
-     * uses the computed simplified expression,
-     * to return an iterator which iterates over the upcoming days
-     * which hold a trigger-time
-     * with the simplified expression, the time-part (hour and minute)
-     * of the expression is ignored to reduce calculation work
-     */
-    getDailyTriggersIterator () {
-      try {
-        let iterator = null
-        if (this.year === moment().year()) {
-          iterator = parser.parseExpression(this.simplifiedExpression, {
-            currentDate: moment().subtract(1, 'days').toDate()
-          })
-        }
-        else {
-          iterator = parser.parseExpression(this.simplifiedExpression, {
-            currentDate: moment(`${this.year}-01-01`).subtract(1, 'days').toDate()
-          })
-        }
-        return iterator
-      }
-      catch (err) {
-        console.log('Error: ' + err.message)
-      }
-      return null
-    },
-    /**
      * iterates over all days and sets their isActive flag to false
      */
     setAllDaysInactive () {
@@ -152,6 +129,10 @@ export default {
         }
       }
     },
+    /**
+     * remove the day-labels of the current year
+     * set all mapped cells to inactive
+     */
     clearYearLayout () {
       if (this.dayMapping && this.dayMapping.size > 0) {
         for (let day of this.dayMapping.keys()) {
@@ -180,26 +161,42 @@ export default {
         })
       }
     },
+    /**
+     * updates the highlighted days in the calendar, which contain a trigger
+     */
     updateCalendarTriggerHighlighting () {
+      // if expression is invalid, set all days not highlighted
       if (this.simplifiedExpression.includes('x')) {
         this.setAllDaysInactive()
       }
+      // if expression is valid
       else {
-        this.setAllDaysInactive()
-        let iterator = this.getDailyTriggersIterator()
-        let date = null
-
-        if (!iterator) {
-          console.warn('could not get daily-trigger-iterator; iterator was null')
-          return
+        // if there is still the calc-thread calculating, stop it
+        if (this.worker) {
+          this.worker.terminate()
         }
+        // create new calculation-thread
+        this.worker = new TriggerCalcWorker()
+        // provide information for calculation to the calc-thread
+        this.worker.postMessage({
+          simplifiedExpression: this.simplifiedExpression,
+          year: this.year,
+          dayMapping: this.dayMapping
+        })
 
-        while ((date = moment(iterator.next().toDate())).year() === this.year) {
-          let index = this.dayMapping.get(`${date.year()}-${date.month() + 1}-${date.date()}`)
-          if (typeof index === 'number') {
+        // listen for messages by the calc-thread, to get results
+        this.worker.addEventListener('message', (event) => {
+          // assure that the received version is up-to-date
+          if (event.data.simplifiedExpression !== this.simplifiedExpression) {
+            return
+          }
+          // clear current day highlighting
+          this.setAllDaysInactive()
+          // highlight all days which correspond to a index, by the returned index-array
+          for (let index of event.data.indexArr) {
             this.cells[index].isActive = true
           }
-        }
+        })
       }
     }
   },
@@ -354,6 +351,7 @@ export default {
 
   .cell {
     font-size: 7px;
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
   }
 
   .active {
