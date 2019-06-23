@@ -65,6 +65,9 @@ export default new Vuex.Store({
     },
     expression: (state, getters) => {
       return `${getters.minuteExpression} ${getters.hourExpression} ${getters.dayOfMonthExpression} ${getters.monthExpression} ${getters.dayOfWeekExpression}`
+    },
+    isExpressionValid: (state, getters) => {
+      return !getters.expression.includes('x')
     }
   }
 })

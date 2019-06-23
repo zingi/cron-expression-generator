@@ -8,6 +8,8 @@
     <day-of-week class="container"/>
     <trigger-table class="container"/>
     <trigger-calendar class="container" />
+    <crontab-cheatsheet class="container"/>
+
     <cron-expression />
   </div>
 </template>
@@ -21,6 +23,7 @@ import DayOfWeek from './components/DayOfWeek'
 import CronExpression from './components/CronExpression'
 import TriggerTable from './components/TriggerTable'
 import TriggerCalendar from './components/TriggerCalendar'
+import CrontabCheatsheet from './components/CrontabCheatsheet'
 
 export default {
   name: 'app',
@@ -32,7 +35,8 @@ export default {
     DayOfWeek,
     CronExpression,
     TriggerTable,
-    TriggerCalendar
+    TriggerCalendar,
+    CrontabCheatsheet
   },
   beforeCreate () {
     this.$store.commit('setup')
@@ -52,8 +56,8 @@ export default {
 
   display: grid;
 
-  grid-column-gap: 5px;
-  grid-row-gap: 5px;
+  grid-column-gap: 10px;
+  grid-row-gap: 10px;
   grid-template-columns: minmax(0, 1fr) 400px 400px 400px minmax(0, 1fr);
   grid-template-rows: 40px 300px 300px 300px minmax(0, 1fr);
 
@@ -61,7 +65,7 @@ export default {
   '.  tit tit tit .'
   '.  hoc mic dwc .'
   '.  dmc moc cex .'
-  '.  .   tcc ttc .'
+  '.  ccc tcc ttc .'
   '.  .   .   .   .';
 }
 
@@ -74,6 +78,7 @@ export default {
 #cronExpressionGridItem { grid-area: cex }
 #triggerTableContainer { grid-area: ttc }
 #triggerCalendarContainer { grid-area: tcc }
+#crontabCheatsheetContainer { grid-area: ccc }
 
 @media (min-width: 1280px) {
   .container {
@@ -91,7 +96,7 @@ export default {
 @media (min-width: 834px) and (max-width: 1280px) {
   #app {
     grid-template-columns: minmax(0, 1fr) 400px 400px minmax(0, 1fr);
-    grid-template-rows: 40px 300px 300px 300px 300px 100px;
+    grid-template-rows: 40px 300px 300px 300px 300px 300px 100px;
 
     grid-template-areas:
     '.  tit tit  .'
@@ -99,6 +104,7 @@ export default {
     '.  dwc dmc  .'
     '.  moc cex  .'
     '.  tcc ttc  .'
+    '.  ccc .    .'
     '.  .   .    .';
   }
 
@@ -113,8 +119,10 @@ export default {
 
 @media (min-width: 600px) and (max-width: 833px) {
   #app {
+    grid-column-gap: 5px;
+    grid-row-gap: 5px;
     grid-template-columns: 5px 1fr 1fr 5px;
-    grid-template-rows: 40px 200px 200px 200px 250px 100px;
+    grid-template-rows: 40px 200px 200px 200px 250px 200px 100px;
 
     grid-template-areas:
     '.  tit tit .'
@@ -122,6 +130,7 @@ export default {
     '.  dwc dmc .'
     '.  moc cex .'
     '.  tcc ttc .'
+    '.  ccc .   .'
     '.  .   .   .';
   }
 
@@ -140,7 +149,7 @@ export default {
     grid-column-gap: 0;
     grid-row-gap: 5px;
     grid-template-columns: 0.02fr 1fr 0.02fr;
-    grid-template-rows: 30px 200px 200px 200px 200px 200px 200px 200px 250px 100px;
+    grid-template-rows: 30px 200px 200px 200px 200px 200px 200px 200px 250px 200px 100px;
 
     grid-template-areas:
     'tit tit tit'
@@ -152,6 +161,7 @@ export default {
     '.   cex .  '
     '.   ttc .  '
     '.   tcc .  '
+    '.   ccc .  '
     '.   .   .  ';
   }
 
@@ -218,5 +228,23 @@ button {
   color: white;
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+
+.animatedButton {
+  color: rgba(255,255,255,0.9);
+  background: linear-gradient(-45deg, #ffa63d, #ff3d77, #338aff, #3cf0c5);
+  background-size: 600%;
+  animation: anime 30s linear infinite;
+}
+@keyframes anime {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 </style>
