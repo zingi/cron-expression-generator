@@ -4,7 +4,7 @@
     v-pressure @pressureChange="handlePressureChange" @pressureEnd="handlePressureEnd">
       <div id="controls">
         <button v-if="!isPopped" @click="popClicked" class="uiButton" id="cronExpressionPopButton">pop</button>
-        <button v-if="!isPopped" @click="copyExpressionClicked" class="uiButton">copy expression</button>
+        <button v-if="!isPopped" @click="copyExpressionClicked" class="uiButton" :class="{ animatedButton: isExpressionValid }">copy expression</button>
       </div>
       <div id="outputContainer">
         <div class="cronElement">
@@ -78,7 +78,8 @@ export default {
       dayOfMonth: 'dayOfMonthExpression',
       month: 'monthExpression',
       dayOfWeek: 'dayOfWeekExpression',
-      expression: 'expression'
+      expression: 'expression',
+      isExpressionValid: 'isExpressionValid'
     })
   }
 }
@@ -97,7 +98,6 @@ export default {
     overflow: auto;
     box-sizing: border-box;
 
-    border-radius: 15px;
     box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
     transition: all 0.3s cubic-bezier(.25,.8,.25,1);
   }
@@ -132,15 +132,19 @@ export default {
   }
 
   .notPopped {
-    background: white;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(5px);
   }
 
   .popped {
+    border-radius: 15px;
     position: fixed;
     height: 80px;
     bottom: 10px;
     left: 10px;
     right: 10px;
+    background-color: rgba(255, 255, 255, 0.5);
     backdrop-filter: blur(5px);
   }
 

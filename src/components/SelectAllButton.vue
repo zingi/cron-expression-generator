@@ -49,6 +49,6 @@ export default {
   }
 
   .unselectAll {
-    background: lightgreen;
+    background: #c7d327;
   }
 </style>

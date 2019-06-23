@@ -128,14 +128,18 @@ export default {
 
   table {
     width: 100%;
+    font-weight: bold;
   }
 
   th { user-select: none; }
-  td { font-family: 'Courier New', Courier, monospace; }
+  td { font-family: 'Courier New', Courier, monospace; text-align: center; }
 
   .untilTableData {
     user-select: none;
-    background: #ecf0f1;
+    /* background: #ecf0f1; */
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    color: white;
     border-radius: 5px;
     text-align: center;
   }
