@@ -67,6 +67,6 @@ export default {
   }
 
   input:checked + .content {
-    background-color: lightgreen;
+    background-color: #c7d327;
   }
 </style>

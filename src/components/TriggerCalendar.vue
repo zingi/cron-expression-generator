@@ -355,6 +355,6 @@ export default {
   }
 
   .active {
-    background: lightgreen;
+    background: #c7d327;
   }
 </style>

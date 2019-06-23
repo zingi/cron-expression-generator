@@ -62,11 +62,11 @@ export default {
   grid-template-rows: 40px 300px 300px 300px minmax(0, 1fr);
 
   grid-template-areas:
-  '.  tit tit tit .'
-  '.  hoc mic dwc .'
-  '.  dmc moc cex .'
-  '.  ccc tcc ttc .'
-  '.  .   .   .   .';
+  'tit tit tit tit tit'
+  '.   hoc mic dwc .  '
+  '.   dmc moc cex .  '
+  '.   ccc tcc ttc .  '
+  '.   .   .   .   .  ';
 }
 
 #title {grid-area: tit }
@@ -99,13 +99,13 @@ export default {
     grid-template-rows: 40px 300px 300px 300px 300px 300px 100px;
 
     grid-template-areas:
-    '.  tit tit  .'
-    '.  hoc mic  .'
-    '.  dwc dmc  .'
-    '.  moc cex  .'
-    '.  tcc ttc  .'
-    '.  ccc .    .'
-    '.  .   .    .';
+    'tit tit tit  tit'
+    '.   hoc mic  .  '
+    '.   dwc dmc  .  '
+    '.   moc cex  .  '
+    '.   tcc ttc  .  '
+    '.   ccc .    .  '
+    '.   .   .    .  ';
   }
 
   .container {
@@ -125,13 +125,13 @@ export default {
     grid-template-rows: 40px 200px 200px 200px 250px 200px 100px;
 
     grid-template-areas:
-    '.  tit tit .'
-    '.  hoc mic .'
-    '.  dwc dmc .'
-    '.  moc cex .'
-    '.  tcc ttc .'
-    '.  ccc .   .'
-    '.  .   .   .';
+    'tit tit tit tit'
+    '.   hoc mic .  '
+    '.   dwc dmc .  '
+    '.   moc cex .  '
+    '.   tcc ttc .  '
+    '.   ccc .   .  '
+    '.   .   .   .  ';
   }
 
   .container {
@@ -184,7 +184,9 @@ export default {
   align-items: stretch;
   box-sizing: border-box;
 
-  background: white;
+  background-color: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(5px);
+
   border-radius: 5px;
 }
 
@@ -212,12 +214,21 @@ export default {
   user-select: none;
 }
 
+html {
+  height: 100%;
+}
+
 body {
-  background: rgb(240, 240, 240);
+  // background: rgb(240, 240, 240);
+  background-image: linear-gradient(to right, #ffc3a0 0%, #ffafbd 100%);
 }
 
 h1 {
   text-align: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  color: white;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
 
 button {
