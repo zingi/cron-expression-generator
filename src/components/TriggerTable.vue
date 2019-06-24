@@ -7,7 +7,9 @@
         <th></th>
       </tr>
       <tr v-for="(trigger, index) in triggers" :key="`trigger-${index}`">
-        <td>{{ trigger.timestamp.format('DD MMM YYYY HH:mm') }}</td>
+        <td class="triggerDate" @click="dateClicked(trigger.timestamp.format('Do MMMM YYYY HH:mm'))">
+          {{ trigger.timestamp.format('DD MMM YYYY HH:mm') }}
+        </td>
         <td class="untilTableData">{{ trigger.until }}</td>
         <td class="imminentTableData">
           <div class="imminentDiv" :class="{ hidden: trigger.untilSeconds > 60}" v-anime="{ rotate: '1turn', scale: 0.5, borderRadius: '50%', duration: 4000, direction: 'alternate', loop: true }"></div>
@@ -38,6 +40,10 @@ export default {
     }
   },
   methods: {
+    dateClicked (dateString) {
+      this.$clipboard(dateString)
+      this.$toasted.show('date copied')
+    },
     calcTriggers () {
       let upcomingTriggersIterator = this.getUpcomingTriggersIterator()
       // if the cron expression did change since the last tick, clear all previous caclulated triggers
@@ -143,6 +149,10 @@ export default {
   }
 
   td { font-family: 'Courier New', Courier, monospace; text-align: center; }
+
+  .triggerDate {
+    cursor: pointer;
+  }
 
   .untilTableData {
     background-color: rgba(0, 0, 0, 0.5);
