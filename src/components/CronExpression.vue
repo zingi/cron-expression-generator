@@ -51,6 +51,7 @@ export default {
 
       if (event.force > 0.6) {
         this.isPopped = false
+        this.currentScale = 1
       }
     },
     handlePressureEnd (event) {

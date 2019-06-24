@@ -153,6 +153,7 @@ export default {
   }
 
   #hint {
+    user-select: none;
     margin: 20px 10px 0 10px;
   }
 
