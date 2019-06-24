@@ -6,7 +6,7 @@
         <button v-if="!isPopped" @click="popClicked" class="uiButton" id="cronExpressionPopButton">pop</button>
         <button v-if="!isPopped" @click="copyExpressionClicked" class="uiButton" :class="{ animatedButton: isExpressionValid }">copy expression</button>
       </div>
-      <div id="outputContainer">
+      <div id="outputContainer" :class="{ outputContainerNotPopped: !isPopped }">
         <div class="cronElement">
           <span class="timeLabel">Minute</span> <br>
           <span class="expressionPart" id="cronMinutes">{{ minute }}</span>
@@ -28,12 +28,16 @@
           <span class="expressionPart" id="cronDayOfWeek">{{ dayOfWeek }}</span>
         </div>
       </div>
+
+      <span v-if="!isPopped" id="humanReadable">{{ humanReadable }}</span>
+
     </div>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import cronstrue from 'cronstrue'
 
 export default {
   name: 'CronExpression',
@@ -81,7 +85,16 @@ export default {
       dayOfWeek: 'dayOfWeekExpression',
       expression: 'expression',
       isExpressionValid: 'isExpressionValid'
-    })
+    }),
+    humanReadable () {
+      if (this.isExpressionValid) {
+        console.log(this.expression)
+        return cronstrue.toString(this.expression)
+      }
+      else {
+        return 'invalid expression'
+      }
+    }
   }
 }
 </script>
@@ -108,18 +121,32 @@ export default {
   #cronExpressionContainer.popped {
     padding: 5px;
   }
+  .popped #outputContainer .cronElement .expressionPart {
+    margin-top: 10px;
+  }
+
+  #humanReadable {
+    text-align: center;
+    margin-top: 10px;
+    overflow: auto;
+    flex: 1 1 40%;
+  }
+
+  .outputContainerNotPopped {
+    border-bottom: #95a5a6 solid 1px;
+  }
 
   #outputContainer {
     overflow: auto;
     display: inline-block;
     display: flex;
-    flex: 1;
+    flex: 2 1 60%;
     justify-content: center; /* align horizontal */
     align-items: flex-start; /* align vertical */
   }
 
   .cronElement {
-    padding: 5px;
+    padding: 0 5px 5px 5px;
     font-size: 1em;
     flex: 1;
     word-break: break-word;
@@ -164,7 +191,8 @@ export default {
 
   #controls {
     display: flex;
-    margin-bottom: 10px;
+    flex: 1 0 auto;
+    margin-bottom: 5px;
   }
   .popped #controls {
     display: none;

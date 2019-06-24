@@ -1,7 +1,7 @@
 <template>
   <div id="triggerCalendarContainer" v-recognizer:swipe.right="onSwipeRight" v-recognizer:swipe.left="onSwipeLeft">
 
-    <div v-for="cell of cells" :key="cell.id" :id="cell.id" :style='{ "grid-area": cell.gridArea}' class="cell" :class="{ active: cell.isActive }">
+    <div v-for="cell of cells" :key="cell.id" :id="cell.id" :style='{ "grid-area": cell.gridArea }' class="cell" :class="{ active: cell.isActive }">
       {{cell.content}}
     </div>
 
@@ -281,6 +281,9 @@ export default {
       this.initCell(`wd${row}_su`, `wd${row}-su`, 'S')
     }
 
+    // create cell for swipe-hint label
+    this.initCell('swi_la', 'swi-la', '< swipe >')
+
     // construct the layout of the current year in the previous generated cells
     this.initYear(moment().year())
   },
@@ -322,7 +325,7 @@ export default {
     grid-template-rows: repeat(23, 1fr);
 
     grid-template-areas:
-    '.      yea-la yea-la yea-la yea-la yea-la yea-la yea-la .      .      .      .      .      .      .      .      .      .      .      .      .      .      .      .      .      .      .      .      .      .      .      .      .      '
+    '.      yea-la yea-la yea-la yea-la yea-la yea-la yea-la .      .      .      .      .      .      .      .      .      .      .      .      .      .      .      .      .      .      .      .      swi-la swi-la swi-la swi-la .      '
     '.      jan-la jan-la jan-la jan-la jan-la jan-la jan-la .      feb-la feb-la feb-la feb-la feb-la feb-la feb-la .      mar-la mar-la mar-la mar-la mar-la mar-la mar-la .      apr-la apr-la apr-la apr-la apr-la apr-la apr-la .      '
     '.      jan-00 jan-01 jan-02 jan-03 jan-04 jan-05 jan-06 .      feb-00 feb-01 feb-02 feb-03 feb-04 feb-05 feb-06 .      mar-00 mar-01 mar-02 mar-03 mar-04 mar-05 mar-06 .      apr-00 apr-01 apr-02 apr-03 apr-04 apr-05 apr-06 .      '
     '.      jan-07 jan-08 jan-09 jan-10 jan-11 jan-12 jan-13 .      feb-07 feb-08 feb-09 feb-10 feb-11 feb-12 feb-13 .      mar-07 mar-08 mar-09 mar-10 mar-11 mar-12 mar-13 .      apr-07 apr-08 apr-09 apr-10 apr-11 apr-12 apr-13 .      '

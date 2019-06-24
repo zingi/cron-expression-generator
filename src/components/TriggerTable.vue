@@ -7,11 +7,16 @@
         <th></th>
       </tr>
       <tr v-for="(trigger, index) in triggers" :key="`trigger-${index}`">
-        <td>{{ trigger.timestamp.format('DD MMM YYYY HH:mm') }}</td>
+        <td class="triggerDate" @click="dateClicked(trigger.timestamp.format('Do MMMM YYYY HH:mm'))">
+          {{ trigger.timestamp.format('DD MMM YYYY HH:mm') }}
+        </td>
         <td class="untilTableData">{{ trigger.until }}</td>
         <td class="imminentTableData">
           <div class="imminentDiv" :class="{ hidden: trigger.untilSeconds > 60}" v-anime="{ rotate: '1turn', scale: 0.5, borderRadius: '50%', duration: 4000, direction: 'alternate', loop: true }"></div>
         </td>
+      </tr>
+      <tr>
+        <td>...</td>
       </tr>
     </table>
     <span v-else id="hint">To display the next few upcoming trigger times, define all expression parts.</span>
@@ -35,6 +40,10 @@ export default {
     }
   },
   methods: {
+    dateClicked (dateString) {
+      this.$clipboard(dateString)
+      this.$toasted.show('date copied')
+    },
     calcTriggers () {
       let upcomingTriggersIterator = this.getUpcomingTriggersIterator()
       // if the cron expression did change since the last tick, clear all previous caclulated triggers
@@ -79,7 +88,14 @@ export default {
         update: function () {
           let duration = moment.duration(this.timestamp.diff(moment()), 'milliseconds')
           if (duration.asDays() > 1) {
-            this.until = '...'
+            if (parseInt(duration.asYears()) > 0) {
+              let years = parseInt(duration.asYears())
+              this.until = years > 1 ? `${years} years` : '1 year'
+            }
+            else {
+              let days = parseInt(duration.asDays())
+              this.until = days > 1 ? `${days} days` : '1 day'
+            }
           }
           else {
             let h = duration.hours()
@@ -122,6 +138,7 @@ export default {
 
 <style scoped>
   #triggerTableContainer {
+    user-select: none;
     box-sizing: border-box;
     overflow: auto;
   }
@@ -131,12 +148,13 @@ export default {
     font-weight: bold;
   }
 
-  th { user-select: none; }
   td { font-family: 'Courier New', Courier, monospace; text-align: center; }
 
+  .triggerDate {
+    cursor: pointer;
+  }
+
   .untilTableData {
-    user-select: none;
-    /* background: #ecf0f1; */
     background-color: rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(5px);
     color: white;
@@ -153,7 +171,6 @@ export default {
   }
 
   #hint {
-    user-select: none;
     margin: 20px 10px 0 10px;
   }
 
