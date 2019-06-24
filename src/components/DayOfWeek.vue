@@ -96,7 +96,7 @@ export default {
     grid-template-rows: repeat(1, 1fr);
 
     grid-template-areas:
-    'dw00 dw01 dw02 dw03 dw04 dw05 dw06';
+    'dw01 dw02 dw03 dw04 dw05 dw06 dw00';
   }
 
   #dayOfWeek_0 { grid-area: dw00 }
