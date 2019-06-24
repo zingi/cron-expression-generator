@@ -149,7 +149,7 @@ export default {
     grid-column-gap: 0;
     grid-row-gap: 5px;
     grid-template-columns: 0.02fr 1fr 0.02fr;
-    grid-template-rows: 30px 200px 200px 200px 200px 200px 200px 200px 250px 200px 100px;
+    grid-template-rows: 30px 200px 200px 200px 200px 200px 250px 200px 250px 200px 100px;
 
     grid-template-areas:
     'tit tit tit'

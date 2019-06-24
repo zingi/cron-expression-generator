@@ -13,6 +13,9 @@
           <div class="imminentDiv" :class="{ hidden: trigger.untilSeconds > 60}" v-anime="{ rotate: '1turn', scale: 0.5, borderRadius: '50%', duration: 4000, direction: 'alternate', loop: true }"></div>
         </td>
       </tr>
+      <tr>
+        <td>...</td>
+      </tr>
     </table>
     <span v-else id="hint">To display the next few upcoming trigger times, define all expression parts.</span>
   </div>
