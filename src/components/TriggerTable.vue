@@ -79,7 +79,14 @@ export default {
         update: function () {
           let duration = moment.duration(this.timestamp.diff(moment()), 'milliseconds')
           if (duration.asDays() > 1) {
-            this.until = '...'
+            if (parseInt(duration.asYears()) > 0) {
+              let years = parseInt(duration.asYears())
+              this.until = years > 1 ? `${years} years` : '1 year'
+            }
+            else {
+              let days = parseInt(duration.asDays())
+              this.until = days > 1 ? `${days} days` : '1 day'
+            }
           }
           else {
             let h = duration.hours()

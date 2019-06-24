@@ -224,6 +224,7 @@ body {
 }
 
 h1 {
+  user-select: none;
   text-align: center;
   background-color: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(5px);
