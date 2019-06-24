@@ -1,0 +1,13 @@
+{ 
+  "name": "Cron Expression Generator", 
+  "short_name": "CronEx Gen.", 
+  "start_url": "index.html", 
+  "display": "standalone", 
+  "background_color" : "#ffc3a0",
+  "icons": [{ 
+    "src": "assets/logo.png", 
+    "sizes": "512x512", 
+    "type": "image/png" 
+  }] 
+
+} 
