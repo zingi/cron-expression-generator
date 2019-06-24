@@ -132,6 +132,7 @@ export default {
 
 <style scoped>
   #triggerTableContainer {
+    user-select: none;
     box-sizing: border-box;
     overflow: auto;
   }
@@ -141,12 +142,9 @@ export default {
     font-weight: bold;
   }
 
-  th { user-select: none; }
   td { font-family: 'Courier New', Courier, monospace; text-align: center; }
 
   .untilTableData {
-    user-select: none;
-    /* background: #ecf0f1; */
     background-color: rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(5px);
     color: white;
@@ -163,7 +161,6 @@ export default {
   }
 
   #hint {
-    user-select: none;
     margin: 20px 10px 0 10px;
   }
 

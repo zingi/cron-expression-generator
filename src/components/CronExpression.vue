@@ -122,7 +122,6 @@ export default {
     padding: 5px;
   }
   .popped #outputContainer .cronElement .expressionPart {
-    /* background: green; */
     margin-top: 10px;
   }
 
