@@ -1,6 +1,7 @@
 # cron-expression-generator
 
 ![GitHub](https://img.shields.io/github/license/zingi/cron-expression-generator)
+![GitHub package.json version](https://img.shields.io/github/package-json/v/zingi/cron-expression-generator)
 
 ## Project setup
 ```
