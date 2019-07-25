@@ -1,7 +1,7 @@
 <template>
   <div id="creditsContainer">
     <a href="https://raw.githubusercontent.com/zingi/cron-expression-generator/master/LICENSE">
-      <img alt="licesnce" src="/assets/license.svg">
+      <img alt="licesnce" :src="`${publicPath}/assets/license.svg`">
     </a>
 
     <p>bachelor thesis @ <a href="https://www.cvast.tuwien.ac.at">TU Wien</a>,</p>
@@ -12,7 +12,12 @@
 
 <script>
 export default {
-  name: 'Credits'
+  name: 'Credits',
+  data () {
+    return {
+      publicPath: process.env.BASE_URL
+    }
+  }
 }
 </script>
 
