@@ -1,5 +1,7 @@
 # cron-expression-generator
 
+![GitHub](https://img.shields.io/github/license/zingi/cron-expression-generator)
+
 ## Project setup
 ```
 npm install
