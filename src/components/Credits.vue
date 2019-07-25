@@ -4,9 +4,9 @@
       <img alt="licesnce" src="/assets/license.svg">
     </a>
 
-    <p>bachelor thesis @ TU Wien,</p>
+    <p>bachelor thesis @ <a href="https://www.cvast.tuwien.ac.at">TU Wien</a>,</p>
 
-    <p>Aaron Zingerle</p>
+    <p><a href="https://twitter.com/messages/compose?recipient_id=936710110411411461">Aaron Zingerle</a></p>
   </div>
 </template>
 
@@ -27,6 +27,7 @@ export default {
     display: flex;
     justify-content: center; /* align horizontal */
     align-items: center; /* align vertical */
+    color: black;
   }
 
   p {
