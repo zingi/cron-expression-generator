@@ -9,8 +9,9 @@
     <trigger-table class="container"/>
     <trigger-calendar class="container" />
     <crontab-cheatsheet class="container"/>
-
     <cron-expression />
+
+    <credits />
   </div>
 </template>
 
@@ -24,6 +25,7 @@ import CronExpression from './components/CronExpression'
 import TriggerTable from './components/TriggerTable'
 import TriggerCalendar from './components/TriggerCalendar'
 import CrontabCheatsheet from './components/CrontabCheatsheet'
+import Credits from './components/Credits'
 
 export default {
   name: 'app',
@@ -36,7 +38,8 @@ export default {
     CronExpression,
     TriggerTable,
     TriggerCalendar,
-    CrontabCheatsheet
+    CrontabCheatsheet,
+    Credits
   },
   beforeCreate () {
     this.$store.commit('setup')
@@ -59,13 +62,14 @@ export default {
   grid-column-gap: 10px;
   grid-row-gap: 10px;
   grid-template-columns: minmax(0, 1fr) 400px 400px 400px minmax(0, 1fr);
-  grid-template-rows: 40px 300px 300px 300px minmax(0, 1fr);
+  grid-template-rows: 40px 300px 300px 300px 100px minmax(0, 1fr);
 
   grid-template-areas:
   'tit tit tit tit tit'
   '.   hoc mic dwc .  '
   '.   dmc moc cex .  '
   '.   ccc tcc ttc .  '
+  '.   crc crc crc .  '
   '.   .   .   .   .  ';
 }
 
@@ -79,6 +83,7 @@ export default {
 #triggerTableContainer { grid-area: ttc }
 #triggerCalendarContainer { grid-area: tcc }
 #crontabCheatsheetContainer { grid-area: ccc }
+#creditsContainer { grid-area: crc }
 
 @media (min-width: 1280px) {
   .container {
@@ -105,7 +110,7 @@ export default {
     '.   moc cex  .  '
     '.   tcc ttc  .  '
     '.   ccc .    .  '
-    '.   .   .    .  ';
+    '.   crc crc  .  ';
   }
 
   .container {
@@ -131,7 +136,7 @@ export default {
     '.   moc cex .  '
     '.   tcc ttc .  '
     '.   ccc .   .  '
-    '.   .   .   .  ';
+    '.   crc crc .  ';
   }
 
   .container {
@@ -162,7 +167,7 @@ export default {
     '.   ttc .  '
     '.   tcc .  '
     '.   ccc .  '
-    '.   .   .  ';
+    '.   crc .  ';
   }
 
   .container {
@@ -175,6 +180,14 @@ export default {
   }
   h1 {
     font-size: 1.5em;
+  }
+
+  #creditsContainer {
+    flex-direction: column;
+  }
+
+  #creditsContainer p {
+    margin: 10px 0 0 0;
   }
 }
 
