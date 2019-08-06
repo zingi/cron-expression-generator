@@ -1,6 +1,6 @@
 {
   "name": "cron-expression-generator",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -9,14 +9,14 @@
   },
   "dependencies": {
     "core-js": "^2.6.5",
-    "cron-parser": "^2.12.0",
-    "cronstrue": "^1.72.0",
+    "cron-parser": "^2.13.0",
+    "cronstrue": "^1.81.0",
     "moment": "^2.24.0",
     "v-clipboard": "^2.2.2",
     "vue": "^2.6.10",
     "vue-animejs": "^2.1.1",
     "vue-pressure": "^2.1.0",
-    "vue-recognizer": "^1.0.0",
+    "vue-recognizer": "^1.0.1",
     "vue-toasted": "^1.1.27",
     "vuex": "^3.0.1"
   },
@@ -25,10 +25,10 @@
     "@vue/cli-plugin-eslint": "^3.10.0",
     "@vue/cli-service": "^3.10.0",
     "@vue/eslint-config-standard": "^4.0.0",
-    "babel-eslint": "^10.0.1",
+    "babel-eslint": "^10.0.2",
     "eslint": "^5.16.0",
-    "eslint-plugin-vue": "^5.0.0",
-    "sass": "^1.18.0",
+    "eslint-plugin-vue": "^5.2.3",
+    "sass": "^1.22.9",
     "sass-loader": "^7.1.0",
     "vue-template-compiler": "^2.6.10",
     "worker-loader": "^2.0.0"
